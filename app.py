@@ -295,7 +295,7 @@ class App(tk.Tk):
         self.page_spec=tk.StringVar();self.extra=tk.StringVar();self.output=tk.StringVar(value=self.cfg['output_dir'])
         self.api_base=tk.StringVar(value=self.cfg['api_base']);self.model=tk.StringVar(value=self.cfg['model']);self.key=tk.StringVar(value='')
         self.prompt=tk.StringVar(value='请用中文概括这份文件的要点，并列出重要数据。')
-        self._style();self._header();self._tabs();self._footer()
+        self._style();self._header();self._footer();self._tabs()
 
     def _style(self):
         s=ttk.Style(self);s.theme_use('clam')
@@ -743,7 +743,8 @@ class ModernApp(App):
         self.active_card_op=operation
         title=next((x[1] for x in MODERN_TOOLS if x[0]==operation),operation)
         self.op_label.config(text=title)
-        self.status.set('已选择工具：'+title+' · 卡片已高亮，可继续添加文件并开始处理')
+        if hasattr(self,'status'):
+            self.status.set('已选择工具：'+title+' · 卡片已高亮，可继续添加文件并开始处理')
         self._refresh_card_highlight()
         self._hint()
     def _hint(self):
@@ -776,4 +777,13 @@ class ModernApp(App):
         tk.Label(self,textvariable=self.status,bg='#eaf2ff',fg=ACCENT,font=('Microsoft YaHei UI',10,'bold'),anchor='w',padx=17,pady=9).pack(fill='x')
 
 if __name__=='__main__':
-    ModernApp().mainloop()
+    app = ModernApp()
+    if '--smoke-test' in sys.argv:
+        app.update_idletasks()
+        assert len(app.card_views) >= 15, '工具卡片未正确加载'
+        app._select_tool('PDF 转 PPT')
+        assert app.active_card_op == 'PDF 转 PPT'
+        print('GUI smoke test passed')
+        app.destroy()
+    else:
+        app.mainloop()
