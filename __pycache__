@@ -1,0 +1,663 @@
+?
+    ?遤迩  ?            	       驚  ? S r SSKrSSKrSSKrSSKrSSKrSSKrSSK r SSKrSSK	r	SSK
+r
+SSK
+rSSK
+rSSKrSSKrSSKJr  SSKJr  SSKrSSKJrJrJr  SSKrSSKJrJrJr  SSKrS rSr\" \R@                  " S	\!" \RD                  " 5       5      5      5      S
+-
+  S
+-
+  r#\$" SS
+SSSS9r%Su  r&r'r(r)r*S(S jr+S r,S r-S r.S r/S)S jr0/ SQr1S r2S*S jr3 " S S\Rh                  5      r5Sr6Sr7S r8S!r9S"r:S#r;/ S$Qr< " S% S&\55      r=\>S':X  a  \=" 5       R                  5         gg)+u8   oycy PDF 宸ュ叿绠憋細Windows 绂荤嚎妗岄潰鐗堬紝Tk GUI銆傞    N)?Path)?datetime)?ttk?filedialog?messagebox)?Image?ImageDraw?ImageFont?   oycy鐨凱DF宸ュ叿绠眤
+oycy-pdf-ai?APPDATAzoycy-PDF-Toolboxz
+settings.jsonzhttps://api.openai.com/v1zgpt-4.1-mini?   鏍囧噯? T)?api_base?model?quality?output_dir?remember)z #214ccfz #e5412dz #f2c33ez #141414z #fffaf0c                 髱  ? [         R                  R                  S5      (       a*   [        R                  R
+                  R
+                  S5        U bv   [        U R                  R                  SS5      5      n U R                  S 5      n[        S[        S	US
+-
+  5      5      nX:  a   U R                  R                  SSU5        ggg! [          a=     [        R                  R                  R                  5          N? [          a      N糵 = ff = f! [          a    Sn Nゝ = f! [          a    Sn N恌 = f! [          a     gf = f)
+zBEnable sharper rendering on Windows and set a sensible Tk scaling.?win?   N?tk?scalingg      ??1ig殭櫃櫃?g       @g      R@)?sys?platform?startswith?ctypes?windll?shcore?SetProcessDpiAwareness?Exception?user32?SetProcessDPIAware?floatr   ?call?winfo_fpixels?max?min)?root?current?px_per_inch?recommendeds       ?/mnt/data/oycy_desktop_v3/app.py?enable_high_dpir.      s-  € ?
+噟亅??榰?%?%?	?廙塎? ? ?7?7??:? ??	?楧烥橤烲橪?▂?9?:圙?	??,?,═?2圞?榙?╗????@?A圞? ? ?
+?????楾?╧?:? !? 
+ ? 	?
+????$?$?7?7?9? 
+??
+ 	 ? 	?奊?	
+ ? 	?奒?	
+ ? 
+??
+鷖_   ?C	 ?%D ?*D% ?D7 ?
+D?(C>?
+D?D?D?D?D"?D"?D4?D4?
+E?Ec                   螵   ?  0 [         E[        R                  " [        R	                  SS95      E$ ! [
+          a    [         R
+                  5       s $ f = f)N?utf-8??encoding) ?DEFAULTS?json?loads?CONFIG?read_textr!   ?copy? ?    r-   ?load_cfgr;   -   sI   € ??M??M渄焜歫??9?9??9?K?L?M?M
+? ?弣墋???鷖   ?1 ?A?Ac                 髳   ? [         R                  R                  SSS9  [         R                   [        R
+                  " U SSS9SS 9  g )NT??parents?exist_okFr   )?ensure_ascii?indentr0   r1   )r6   ?parent?mkdir?write_textr4   ?dumps)?ds    r-   ?save_cfgrG   4   s9   € ?
+嘙丮???╰??4?
+??攄梛抝??竡?A菺??Tr:   c                  ?  ? U R                  5       (       d  [        [        U5      5      $ / n[        R                  " SU R                  5       5       H?  nU(       d  M  SU;   am  UR	                  SS5      u  pE[
+        U5      [
+        U5      pTSUs=::  a
+  Us=::  a  U::  d  O  [
+        SU 35      eUR                  [        US-
+  U5      5        M  [
+        U5      nSUs=::  a  U::  d  O  [
+        SU 35      eUR                  US-
+  5        M?  
+   U$ )Nu	   [,锛孿s]+?-?   u!   椤甸潰鑼冨洿瓒呭嚭鏈夋晥鑼冨洿锛歶   椤电爜瓒呭嚭鑼冨洿锛?	?strip?list?range?re?split?int?ValueError?extend?append) ?spec?max_page?out?token?a?b?ns           r-   ?pointsr[   9   s?   € ????????5?5?€C?????????5??慼??????榮燗?&塂圓?恞??榪?坬???+榓?+??+碕蠥b衏h衎i?j?k?k?廕塉攗楺?橴燗??'?怑?圓???%榅?%琙?O蠵Q萻?S?T?T?廕塉恞?憉?? 6? €Jr:   c           
+      ?  ? / SQn[        S U 5       S 5      n[        U 5       GH?  u  pVUR                  n US:X  a2  US-    S[         U 5       3nSo桼                  S -
+  U R
+                  S-
+  p篛 UnS	o桼                  S -
+  U R
+                  S -
+  p篣(       a  [        R                  " XI5      O[        R                  " 5       n[        R                  " S
+[        S
+[        U R                  5      5      S4S
+5      n
+[        R                  " U
+5      nUR                  U
+R                  S -
+  S4USUSS9  [         R"                  " 5        nU
+R%                  USS9  ['        U R                  S-  U
+R                  5      nUU
+R
+                  -  U
+R                  -
+  n[(        R*                  " U
+US -
+  -
+  U
+US -
+  -
+  U
+US -
+  -   U
+US -
+  -   5      nUR-                  UUR/                  5       SS9  S S S 5        GM?  
+   g ! , (       d  f       GM?  = f)N)zC:\Windows\Fonts\msyh.ttczC:\Windows\Fonts\simhei.ttfz//usr/share/fonts/truetype/dejavu/DejaVuSans.ttfc              3   骹   #   ? U  H'  n[        U5      R                  5       (       d  M#  Uv ?  M)  
+   g 7f?N)r   ?exists??.0?ps     r-   ?<genexpr>?draw_text_overlay.<locals>.<genexpr>N   s   ? € ?>??琓?玏痎?=桻慟?鵶   ?1?1?   椤电爜rJ   z / ?   r   ?   ?   ?RGBAiX  閷   )?   rk   rk   r   镕   )檐   ?   ?   殒   ?mm)?fill?font?anchor?PNG)?formatg吞烫烫?T)?stream?overlay)?next?enumerate?rect?len?width?heightr
+   ?truetype?load_defaultr   ?newr'   rP   r	   ?Draw?text?io?BytesIO?saver(   ?fitz?Rect?insert_image?getvalue)?docr?   ?kind?fontpaths?fontpath?i?pagerb   ?s?fs?x?yrs   ?im?dd?buf?w?hr{   s                      r-   ?draw_text_overlayr?   J   s?  € ?D€I??>??>??E€H?楽????廔塈?????怮??恠?榮???%圓˙爎穡眞?眥繟荋罤萺罬??圓?恇????竌???;寉?!?!??/?譇W褹W覣Y??廦奩恦?燙?≦疻￤??6??<竜?N??廭奮楤???
+???????楻? ???萒??R?廧奪孿楽?廏塆怌?圙?&?怉桮慓楥慘????*圓?怋桰慖?榖焗檋?&圓???楺榪?檚橴燗燼??≦╭㏒??癆癮盋??8圖???榙???????H? 奬? "? 廫鷖
+   ?B G1?
+H	c                 驢   ? U(       d
+  [        S5      eSSSSS.U   nUu  px[        U5      o"R                  R                   S S S9  U n	U	S	:X  a?  [        R
+                  " 5       n
+ U HO  n
+[        R
+                  " U
+5       nUR                  (       a
+  [        S
+5      eU
+R                  U5        S S S 5        MQ  
+   U
+R                  [        U5      S
+S S9  U
+R                  5         [        U5      $ U	S
+:X  GaK  [        R
+                  " 5       n U H?  n
+[        R
+                  " U
+5       n
+U
+R                  S;  a  U
+R                  S5      n
+[        R                  " 5        nU
+R                  US[!        US-  5      S S9  UR#                  5       nS S S 5        S S S 5        [        R
+                  " WSS9n[        R
+                  " SUR%                  5       5      nUR                  U5        UR                  5         UR                  5         M?  
+   UR                  [        U5      S
+S S9  UR                  5         [        U5      $ U	S:X  Ga/  [&        R(                  " S5      =(       d    [&        R(                  " S5      nU(       d
+  [+        S5      e[-        U5      S:w  a
+  [        S5      e[.        R0                  " 5        n[2        R4                  " USSSSUUS   / S S S S!9n[7        [        U5      R9                  S"5      5      nUR:                  (       d   U(       d1  [+        UR<                  =(       d    UR>                  =(       d    S#5      e[&        R@                  " US   U5        S S S 5        [        U5      $ [-        U5      S:w  a  [        S$U	 S%35      e[        R
+                  " US   5      nS n UR                  (       a  U	S&:w  a
+  [        S'5      eU	S(:X  ab  URC                  S)RE                  S* [G        U5       5       5      S+S,9  [        U5      UR                  5         U(       a  UR                  5         $ $ U	S-:X  a?  SS.K$J%n  U" 5       n[G        U5       HV  u  nnU(       a  URM                  5         URO                  S/5      nURQ                  5        H  nURS                  U5        M  
+   MX  
+   UR                  [        U5      5        [        U5      UR                  5         U(       a  UR                  5         $ $ U	S0:X  a?  SS1K*J+n  U" 5       nURX                  nS2Ul-        UR]                  S3S4/5        [G        U5       HE  u  nnURO                  S/5      RQ                  5        H  n UR]                  US-   U S S5 /5        M  
+   MG  
+   UR                  [        U5      5        [        U5      UR                  5         U(       a  UR                  5         $ $ U	S6:X  Ga%  SS7K/J0n!  SS8K1J2n"  U!" 5       n#U"" S95      U#l3        U"" S:5      U#l4        U H?  n$U#Rj                  Rm                  U#Rn                  S;   5      n%U$Rq                  [        Rr                  " S<S<5      S=9n[        R                  " URu                  S>5      5      n&U%Rv                  Ry                  U&SSU#Rf                  U#Rh                  S?9  M?  
+   U#R                  [        U5      5        [        U5      UR                  5         U(       a  UR                  5         $ $ U	S@:X  GaW  [z        R|                  " USA[z        R~                  5       n'[G        U5       H?  u  nnURq                  [        Rr                  " U SB-
+  U SB-
+  5      SCSD9n[        R
+                  " [        R                  " URu                  S>5      5      5       n
+[        R                  " 5        n(U
+R                  S5      R                  U(S[!        US-  5      S S9  U'R?                  SEUS-   SF SG3U(R#                  5       5        S S S 5        S S S 5        M?  
+   S S S 5        [        U5      UR                  5         U(       a  UR                  5         $ $ U	SH:X  a?  Sn)[z        R|                  " USA5       n'[G        U5       Hj  u  nn[G        UR?                  S SI95       HH  u  n*n
+UR?                  U
+S   5      n+U)S-
+  n)U'R?                  SEUS-   SF SJU*S-   SF SKU+SL    3U+SM   5        MJ  
+   Ml  
+   S S S 5        U)S:X  a
+  [        SN5      e[        U5      UR                  5         U(       a  UR                  5         $ $ U	S&:X  a?  UR                  (       d
+  [        SO5      eUR?                  U5      (       d
+  [        SP5      eUR                  [        U5      [        R?                  S
+S SQ9  [        U5      UR                  5         U(       a  UR                  5         $ $ U	SR:X  a?  U(       d
+  [        SS5      e[        R?                  [        R?                  -   n,UR                  [        U5      [        R?                  XUU,ST9  [        U5      UR                  5         U(       a  UR                  5         $ $ U	SU:X  a?  [?        U[-        U5      5      n-[z        R|                  " USA[z        R~                  5       n'[G        U-5       Hk  u  n.n/[        R
+                  " 5       n0U0R                  UU/U/SV9  U'R?                  SEU/S-   SF SJU.S-   SW SX3U0Ru                  S
+S S95        U0R                  5         Mm  
+   S S S 5        [        U5      UR                  5         U(       a  UR                  5         $ $ U	SY:X  aN  UR                  [        U5      S
+S S SZ9  [        U5      UR                  5         U(       a  UR                  5         $ $ U	S[:X  Ga?  [        R
+                  " 5       nU GH  nURq                  [        Rr                  " U SB-
+  U SB-
+  5      SCSD9n[        R
+                  " [        R                  " URu                  S>5      5      5       n
+[        R                  " 5        n(U
+R                  S5      R                  U(S[!        US-  5      S S9  U(R#                  5       n1S S S 5        S S S 5        UR?                  UR?                  R?                  UR?                  R?                  S?9n2U2R?                  U2R?                  W1S\9  GM!  
+   UR                  [        U5      S
+S S9  [        U5      UR                  5         U(       a  UR                  5         $ $ [        R
+                  " 5       nU	S];   a€  [?        U[-        U5      5      n3U	S^:w  a  U3O5[?        [-        U5      5       V4s/ s H  n4U4[?        U35      ;  d  M  U4PM  
+   sn4n5U5(       d
+  [        S_5      eU5 H  n/UR                  UU/U/SV9  M  
+   O腢R                  U5        U	S`:X  a?  [?        U=(       d    Sa5      n6U H$  nUR?                  UR?                  U6-   Sb-  5        M&  
+   OnU	Sc:X  a  [?        USdS35        OZU	Se:X  a.  UR?                  5       (       d
+  [        Sf5      e[?        UUSg5        O&U	Sh:X  a  UR?                  0 5        O[        SiU	 35      eUR                  [        U5      S
+S S9  [        U5      UR                  5         U(       a  UR                  5         $ $ ! , (       d  f       GM?  = f! U
+R                  5         f = f! , (       d  f       G
+N? f! , (       d  f       G
+N? f! UR                  5         f = f! , (       d  f       GN= f! , (       d  f       G Ng= f! , (       d  f       GMX  = f! , (       d  f       G Nx= f! , (       d  f       GN? f! , (       d  f       GN? f! , (       d  f       GN5= f! , (       d  f       GN?= fs  sn4f ! UR                  5         U(       a  UR                  5         f f = f)jNu   璇峰厛閫夋嫨鏂囦欢銆?閆   g333333?)閭   g)\徛??)榇   g悯(\徛?)轲   g
+祝p=
+???   杞婚噺r
+   ?   楂樻竻?   瓒呮竻Tr=   ?   鍚堝苟 PDFu"   鍖呭惈鍔犲瘑 PDF锛岃鍏堣В閿併€傞   )?garbage?deflate?   鍥剧墖杞?PDF)?RGB?Lr?   ?JPEG閐   )r   ?optimize?jpeg)rw   ?filetype?pdf?   Word 杞?PDF?soffice?libreofficeu`   姝ゅ姛鑳介渶瑕佸彟澶栧畨瑁?LibreOffice锛堝厤璐癸級锛屽苟纭繚 soffice 鍙湪 PATH 涓壘鍒般€俽J   u$   姣忔璇烽€夋嫨涓€涓?Word 鏂囦欢銆倆
+--headlessz--convert-toz--outdirr   閤   )?capture_outputr?   ?timeout?*.pdfu   LibreOffice 杞崲澶辫触u   銆寀)   銆嶆瘡娆″彧鑳介€夋嫨涓€涓?PDF 鏂囦欢銆傰
+   瑙ｉ攣 PDFu/   PDF 宸插姞瀵嗭紝璇峰厛浣跨敤銆岃В閿?PDF銆嶃€傰
+   PDF 杞枃鏈瑉
+
+c              3   骕   #   ? U  H   u  pS US-    SUR                  5        3v ?  M"  
+   g7f)u   --- 绗?rJ   u	    椤?---
+N??get_text)ra   r?   rb   s      r-   rc   ?run_operation.<locals>.<genexpr>?   s-   ? € ?i襖h裊X蠻V??癚??皕??????P襖h鵶   ?*r0   r1   ?   PDF 杞?Word??Documentr?   ?   PDF 杞?Excel)?Workbooku   鏂囨湰鎻愬彇re   u   鍐呭i  ?   PDF 杞?PPT)?Presentation)?Inches?   ?   ?   g吞烫烫?)?matrix?png)r}   r~   ?   PDF 杞浘鐗噐?   镠   F)r?   ?alpha?page_?03z.jpg?   鎻愬彇鍥剧墖)?full?_?.?ext?imageu   鏈彂鐜板祵鍏ュ浘鐗囥€倁   璇ユ枃浠舵病鏈夊瘑鐮佷繚鎶ゃ€倁   瀵嗙爜涓嶆纭€??encryptionr?   r?   ?   PDF 鍔犲瘑u   璇峰～鍐欏瘑鐮併€?r?   ?owner_pw?user_pw?permissions?   PDF 鎷嗗垎锛堥€愰〉锛??from_page?to_page?02?.pdf?   鍘嬬缉 PDF锛堟棤鎹燂級)r?   r?   ?clean?   鍘嬬缉 PDF锛堝浘鍍忥級)rw   )?   鎻愬彇椤甸潰?   鍒犻櫎椤甸潰?   閲嶆柊鎺掑垪椤甸潰r?   u   澶勭悊鍚庢病鏈夊墿浣欓〉闈€傰
+   鏃嬭浆 PDF?90ih  ?   娣诲姞椤电爜r   ?   娣诲姞鏂囧瓧姘村嵃u   璇峰～鍐欐按鍗版枃鏈€倁   姘村嵃?   鍒犻櫎 PDF 鍏冩暟鎹畊   鏈疄鐜扮殑鎿嶄綔锛?VrQ   r   rB   rC   r?   ?open?needs_pass?insert_pdfr?   ?str?closer   ?mode?convertr?   r?   ?roundr?   ?convert_to_pdf?shutil?which?RuntimeErrorr|   ?tempfile?TemporaryDirectory?subprocess?runrL   ?glob?returncode?stderr?stdout?copyfilerD   ?joinrz   ?docxr?   ?add_page_breakr?   ?splitlines?add_paragraph?openpyxlr?   ?active?titlerS   ?pptxr?   ?pptx.utilr?   ?slide_width?slide_height?slides?add_slide?slide_layouts?get_pixmap?Matrix?tobytes?shapes?add_picture?zipfile?ZipFile?ZIP_DEFLATED?writestr?get_images?extract_image?authenticate?PDF_ENCRYPT_NONE?PDF_PERM_PRINT?PDF_PERM_COPY?PDF_ENCRYPT_AES_256r[   ?new_pager{   r}   r~   r?   rM   ?setrP   ?set_rotation?rotationr?   rK   ?set_metadata)7?operation?inputs?destr   ?page_spec?extra?q?dpi?jpgquality?op?merged?frF   r?   ?tmp?data?pixr?   ?exe?td?r?filesrV   r?   r?   r?   rb   r?   ?liner?   ?wb?wsr?   r?   r?   ?prsr?   ?slide?bio?zrY   ?count?j?dat?perm?nums?idxrZ   ?part?blob?np?chosen?k?selected?degs7                                                          r-   ?run_operationrJ  a   s~  € ???;?<?<???蠾b?c衐k?l€A?丱€C???€D梴憑?(?(???(?E?€B?	圽???????	 ???梇扽榪擻燪?梶梶??Z?[?[??%?%燼?(? "慭? ? 
+廗塊?楧??癲圞?;??????媦??	坃??廔奍婯??	???梈抁?擼燽?梬憌爈?2???繣?J癇?????????燰碪?纁??J蠻Y??Z?"焲檤泘?? &? #? 梚抜爐癴?=??梚抜?爏?9?9?;?<????楽?!????楥烮橧濳? ? 
+廎塅?恡?燼?團?6??????媦??	坁??弆妉??%?D???癿?D????  (J?  K?  K?坴?????T?U?U??(?(?*╞????燶???蠽X衂`衋b裐c?d?2?纒?L圓??榖???爓?/?0圗?弢弢??窺縓筙?o????o蠻o?p?p?廜奜楨?橦燿?+? +? ?媦??
+?儃恆?渮–?╰?\?]?^?^???????€A燚榗?_???楤??.磈蠥r?s?s?
+?? ?廜塐楩烱橩?i診e衒g診h?i?i衪{圤?|?  EH?  IM?  EN饁 	
+????坰弝墆峽?饂 ???%??圕? ?東????怱?'?'?)?梲憐??)?? 烵橭?-怐╯?@?@??F?-? $? 
+廐塇擲?揧??餱 	
+????坰弝墆峽?餲 ?? ?)??圔???楤皀???廔塈恱??)?*? ?東??????燜?+?6?6?8怉???繟繿罜??????S?8? $?廏塆擟?揑??餢 	
+????坰弝墆峽?餣 ???)?(??圕?????蒝蠺V薢窩?L???梛慾?*?*??<?<窺???@?繲莀羅診`譢g襖g衕k衛o覾p繽蠩q??桱扟榮焮檣??1?2?????(?(?≦╭皊??萩譔^袾^?(?_? ? 
+廐塇擲?揧??餏 	
+????坰弝墆峽?餑 ?? ????爏珿?@?@?A繯?$燪?慍怉恆???琩痥猭?竍??繰??H蠵U??V怌???╯瘂﹞??A?B?C纑?焃歓淺≦?烰橨爑?-?2?2?癴膃菾蠾Z蒒覨[衒j?2?k?烰橨?╭?﹕?╤癲?;窺縕筞籠?J? *? D?C? (? B? 恡?餽 	
+????坰弝墆峽?餾 ???圗????爏?+╭?$燪?慍怉恆?)???窪??A?B????無檕╞?〆?4?癠窺盰癠???燯?≦?╮??癆癮盋???窼?筞窵?I?萭??W? !C? (? ,? 恆媥渏?C?D?D?恡?餪 	
+????坰弝墆峽?餫 ??????R?S?S?????(?(??O?P?P?
+廎塅?恡???>?>?蠸W團?X訿c衐h觍i餢 	
+????坰弝墆峽?餣 ???????@?@??&?&?9?9?9圖?
+廎塅?恡???A?A菶衝r團?s詛~?  @D?  |E餚 	
+????坰弝墆峽?餛 ?)?)???燼??)圖????燾??>?>????&爐瀇慐怌?????怐燭癚??燺?M?桱慗?爍??爃╝?癆?癰▃??>竧縷箌蠺U衈b竱?c?d衑i譭o裡o謊q? -? @? 恡?養 	
+????坰弝墆峽?餋 ?)?)?
+廎塅?恡?燼?窽團?B?萪?? 	
+????坰弝墆峽?? ?)?)????圕???桳慙???癈?盕?竢??B?怢?O??梈抁??????皍?=?>?????????????)?.?.╭??纉蠶T羘覢U衉c?.?d?焃橺沑?? &? @? ??燼???????H???????╰??4? ? 
+廐塇擲?揧爍?圚?6糲?籭? 	
+????坰弝墆峽?? 
+廔奍婯??
+?G?G????+團?#燸?3憊腢?萹?腯?k耛?蠽W訽b衏i觃j裋j?羃?k圚???M?N?N??榗焠檔≦??榥?E扻?廚塏??????????&??怉楺焇橿≦痁㈱?窼?@?A??恀?#?5癱?竂?F??)?)?梴憑梷憓??P?Q?Q?!?爀℉?5??+?+–?<?<窻?@?!?9???>?????
+???怲??═??2?竏??	????坰弝墆峽?鱁 "梊 ??? &? #朷 ??? +?*V *瀄 D?C  B?A ,?+" @?? &? @?? :l  	
+????坰弝墆峽?鷖?  ?| ?.| ?&| ?} ?7|:?/|( ?|:?B} ?B(}!?A!7 ?B7 ?B17 ?D7 ?-7 ?A6~?~ ?A}3	?~ ?~?7 ?7 ?A:~*?#7 ?A67 ?A,7 ?A7 ?A;~<?7 ?+7 ?B7 ? ?> ? ?B7 ?A7 ?2?2?D7 ? 
+|	?	| ?|%?
+|7
+?|:?
+}		?} ?}?
+}0 ?
+~
+?~ ?
+~
+?	~?
+~' ?7 ?
+~9 ?7 ?
+
+ 7 
+
+  
+/	*
+7 7*A@!))r?   ?PDFr?   )r?   rK  ?zip)r?   rK  r?   )r?   rK  r?   )r?   rK  r?   )r?   rK  r?   )r?   rK  r?   )r?   rK  r?   )r?   rK  r?   )r?   rK  r?   )r?   rK  r?   )r?   ?   瀹夊叏r?   )r?   rM  r?   )r?   ?   杞崲?txt)r?   rN  r  )r?   rN  ?xlsx)r?   rN  r  )r?   rN  rL  )r?   rN  rL  )r?   rN  r?   )r?   rN  r?   c                 驚  ? SSK Jn  U R                  5       R                   S5      n U" U 5      nUR                  S;  d3  UR
+                  (       a"  UR                  (       d  UR                  (       a
+  [        S5      eUR                  S:w  a  UR
+                  S ;  a
+  [        S5      eU R                  S	5      (       a  U $ U R                  S
+5      (       d  U R                  S
+5      (       a  U S	-   $ S
+UR                  ;   d  SUR                  ;   a  U S	-   $ [        S
+5      e)zHChat Completions compatible endpoint only. Never POST to file/blob URLs.r   )?urlsplit?/)?http?httpsu?   API 鍦板潃蹇呴』鏄湇鍔″晢鎻愪緵鐨?API Base URL锛屼緥濡?https://api.openai.com/v1锛涗笉鑳藉～鍐欑綉椤点€佹枃浠朵笅杞芥垨鍚?? 鐨勭鍚嶉摼鎺ャ€俽U  )?localhost?127.0.0.1z::1uE   杩滅▼ API 蹇呴』浣跨敤 HTTPS锛涗粎鏈満 localhost 鍙娇鐢?HTTP銆倆/chat/completionsz/v1z/v1/z/compatible-mode/uy   鍦板潃浼间箮涓嶆槸鍏煎鎺ュ彛鐨?Base URL銆備竴鑸簲浠?/v1 缁撳熬锛涜鍒版ā鍨嬫湇鍔″晢鐨?API 鏂囨。鑾峰彇鍦板潃銆?
+?urllib.parserR  rK   ?rstrip?scheme?hostname?query?fragmentrQ   ?endswith?path)?baserR  ?parseds      r-   ?api_endpointrb  ?   s?   € ?%?
+?????楽?!€D?怐?€F????-?-癡穇穇???蠿^譞g譞g??  p?  q?  	q?
+噠亇恎?????X?X??`?a?a?
+噠亇?(?)?)???
+噠亇怳??榯焳檥╒?4?4窽蠦U?U?U??????2癴穔眐?A??'?'?'??  Q?  
+R?  Rr:   c           
+      ?  ? [        U 5      nUR                  5       (       d
+  [        S5      eSSSS.nU(       a  SU-   US'   UR                  5       US .n [        R                  R
+                  U[        R                  " U SS	9R                  S
+5      US
+S9n [        R                  R                  X凷
+9 n	[        R                  " U	R                  5       R                  S
+5      5      n
+S S S 5        ['        W
+[(        5      (       a  U
+R+                  S 5      (       d
+  [!        S!5      eU
+S    S"   R+                  S#0 5      R+                  S$5      n['        U[,        5      (       a  SR/                  S% U 5       5      nU=(       d    S&$ ! , (       d  f       N? f! [        R                  R                    a?  n
+U
+R                  S5      R                  S
+SS9nU
+R                  S:X  a  SO7U
+R                  S;   a  SO%U
+R                  S:X  a  SOU
+R                  S:X  a  SOSn
+[!        SU
+R                   SU SU U
+ 3 5      eS n
+A
+f[        R                  R"                    a!  n
+[!        SU
+R$                   SU S35      eS n
+A
+ff = f)'Nu   妯″瀷 ID 涓嶈兘涓虹┖銆倆application/jsonzoycy-PDF-Toolbox/2.0)zContent-Type?Acceptz
+User-Agentz Bearer ?Authorization)r   ?messagesF)r@   r0   ?POST)r0  ?headers?method)r?   i?  ?replace)?errorsi?  u?    405 琛ㄧず鎺ュ彛涓嶆敮鎸?POST锛涘父瑙佸師鍥狅細API 鍦板潃鎸囧悜缃戦〉銆佸璞″瓨鍌ㄦ垨闈炲吋瀹规帴鍙ｃ€傝鏍稿鏈嶅姟鍟嗙殑 Chat Completions Base URL銆?i?  i?  u-    401/403 琛ㄧず瀵嗛挜鏃犳晥鎴栨病鏈夋潈闄愩€俰?  u&    404 琛ㄧず璺緞鎴栨ā鍨嬩笉姝ｇ‘銆俰?  u)    429 琛ㄧず璇锋眰棰濆害鎴栭€熺巼鍙楅檺銆俽   zHTTP u   锛岃姹傚湴鍧€锛氌
+u   鏃犳硶杩炴帴 API锛歶
+   
+鍦板潃锛歶*   
+璇锋鏌ョ綉缁溿€佷唬鐞嗘垨 API 鍦板潃銆傏 choicesuf   鎺ュ彛杩斿洖鎴愬姛锛屼絾娌℃湁 choices 瀛楁锛涜鏈嶅姟鍙兘涓嶆槸 Chat Completions 鍏煎鎺ュ彛銆俽   ?message?contentc              3   髏   #   ? U  H.  n[        U[        5      (       d  M  UR                  S S5      v ?  M0  
+   g7f)r?   r   N)?isinstance?dict?getr`   s     r-   rc   ?chat_request.<locals>.<genexpr>  s-   ? € ?j蔊纐訵a衎c詃h譝i?B????竢?B?B蔊鵶   ?8?8u   鎺ュ彛杩斿洖浜嗙┖鍐呭銆?rb  rK   rQ   ?urllib?request?Requestr4   rE   ?encode?urlopenr5   ?read?decode?error?HTTPError?coder?   ?URLError?reasonrq  rr  rs  rL   r   )r`  r   ?keyrf  r?   ?urlrh  ?payload?req?response?result?e?raw?suffixro  s                  r-   ?chat_requestr?    sF  € ?怲?€C?????渮?E?F?F?.?J蠿n?o€G?
+營╟???#?梉慬揮╤?7€G?????榮??????N?U?U蠽]?^術n衯|??}€C?
+x?廭塣?#?#燙?#?8窰???榟焟檓沷?4?4癢?=?>團? 9? 恌淭?"?"???癥??????  D?  E?  	E???榓? ?$?$燳╮?2?6?6皔?A€G?????????j蒅?j?j???3?3?3? 9?8
+???!?!? S?
+廎塅?婯??榳╥??8?? tu?  tz?  tz?  |?  t?  p谻D??萗覥V???=縁笷繡籏?8?@縱箆纒粄?;蠵R? 	? 楿?????<窼窫?繡????Q?R?R
+??? ? ? x??0?????纁繳蠮u?v?w?wx鷖C   ?F ?4F?F ?
+F ?F ?F ?I??B	H=?!I??I:?I?c                   罄   ^ ? \ rS rSrU 4S jrS rS rS r SS jrS  r	S r
+SS	 jr
+S
+ rS
+ r
+S rS
+ rS rS rS rS rS rS rS rS rS rS rS rS rS rSrU =r$ )?Appi!  c                 蠹  >? [         TU ]  5         [        U 5        U R                   [        S-   5        U R
+                  S5        U R
+                  SS5        U R                  [        S9  [        5       U l
+        / U l
+        SU l        [        R                  " S S9U l        [        R                  " U R                  S	   S9U l        [        R                  " 5       U l        [        R                  " 5       U l        [        R                  " U R                  S
+   S9U l        [        R                  " U R                  S
+   S9U l        [        R                  " U R                  S   S9U l        [        R                  " S
+S9U l        [        R                  " SS9U l        U R1                  5         U R3                  5         U R5                  5         U R7                  5         g )Nu    路 WINDOWS EDITION?1220x820i?  i?  ??bgFr?   ??valuer   r   r   r   r   uB   璇风敤涓枃姒傛嫭杩欎唤鏂囦欢鐨勮鐐癸紝骞跺垪鍑洪噸瑕佹暟鎹€??super?__init__r.   r   ?APP_NAME?geometry?minsize?configure?PAPERr;   ?cfgr5  ?busyr   ?StringVarr$  r   r'  r(  ?outputr   r   r?  ?prompt?_style?_header?_tabs?_footer??self?__class__s    €r-   r?  ?App.__init__"  sN  鴢 ?
+??????0???糎蠩Z?Z?[???恓?!???╯??7??????P????爎楧淛癊???梶抾??7??腞荺耚蠿\譞`裍`衋j裍k袳l???梶抾搤??????燿藼螸蔐衉c譥g裚g衕t裚u袻v???條抣?????=?>?????衇a譣e裖e衒m裖n袹o竧紌詙{?  zF?  zF?  MO?  zP衟t詐x?桳扡?k?l??????恉條憀攏燭????r:   c                 髍  ? [         R                  " U 5      oR                  S5        UR                   S[        SS9  UR                   SSS S[
+        S	9  UR
+                  SS
+[        4/S
+9  UR                   S[        [
+        S
+S9  UR                   S[        S
+9  UR                   SSS9  UR                   SSS9  g )N?clam?TNotebookr   ??background?borderwidth?TNotebook.Tab??Microsoft YaHei UI?   ?bold)?   r?   z #e5dfd0)rs   ?paddingr?  ?foregroundrH  ?r?  ?TLabel?r?  r?   )r?  r?  rs   ?TFrame?TEntryr?   ?r?  ?TCombobox?   )r   ?Style?theme_user?  r?  ?INK?map?YELLOW?r?  r?   s     r-   r?  ?App._style,  s?   € ?
+??怐????爁?-?	??怟?窺????	??怬?I蠷Y衑n詚}??~?	??坥?磃?=?>????	??怘??蠦[??\?	??怘???.?	??怘燪??'?	??怟???*r:   c           	      ?  ? [         R                  " U [        SS9oR                   SS9  UR	                  S5        [         R
+                  " USS[        S S9R
+                  S	S
+S
+9  [         R
+                  " USS[        S S9o"R
+                  S	S
+S
+9  UR                  SSS
+S
+[        SS9  UR                  SSSS[        SS9  [         R                  " US[        SSS9R
+                  SS
+S
+9  [         R                  " US[        [        SS9R
+                  SSS
+9  g )N閌   ?r?  r~   r?   ?rr   F锳   r   )r}   r~   r?  ?highlightthickness?   ?   )r?   r?   r   ?   r   )rr   ?outline?   rJ   锧   rg   r
+   ?white)r?  ?   r?  ?r?   r?  ?fgrs   閏   u6   BAUHAUS / PDF STUDIO  路  鏈湴澶勭悊 + 鑷€?AI API)?Arialr?  r?  閒   )r   ?Framer?  ?pack?pack_propagate?Canvas?place?create_oval?RED?create_rectangler?  ?Label)r?  ?top?cs      r-   r?  ?App._header6  s  € ?廐奌怲淪??+?疕〩?℉?>竤?Q?Q蠷W?X?
+???楤燽珻??E?K?K萣蠸U?K?V???怌榖?琧繯?G???蠷T蠾Y?袶Z?	??恆??楻???4癚?G?G??萊蠵R訶^術i?G?j?
+????/??蠫g?h?n?n衠s衯x?n?y?
+????R訴Y註c衖|?}?  	D?  	D?  GJ?  MO?  	D?  	Pr:   c                  鬁  ? [         R                  " U 5      oR                  SSSSS9  [         R                  " U5      n[         R                  " U5      n[         R                  " U5      nUR	                  USS 9  UR	                  USS 9  UR	                  US	S 9  U R
+                  U5        U R
+                  U5        U R                  U5        g )
+N?bothTr?  r?  ?rr   ?expand?padx?padyu   01  PDF 宸ュ叿?r?   u   02  AI 鏂囨。鍔╂墜u   03  API 涓庤缃?r   ?Notebookr?  r?  ?add?_tools_ui?_ai_ui?_settings_ui)r?  ?tabs?tool?ai?settingss        r-   r?  ?App._tabs>  s?   € ?廫奬?????╲窽纑萺??R?廦奩恡媉??????楻???????????+??,═疿癰?S╔?T蠻Y譛]裊]衈f衛蠻]?  VA???恡?楾焄橻?淿═?>?>竫?Hr:   c           	   
+   髏   ? [         R                  " U4U[        [        SSS.UD6nUR	                  X4SSSS9  U$ ) N?r?  r?   r?  r?   ?r?   r?  r?  rs   rt   r?   r?   ??row?column?stickyr?  r?  )r   r?  r?  r?  ?grid) r?  rB   r?   r4  r?  ?kwr?   s           r-   ?_label?App._labelD  s=   € ?????j榯??Y衋d?j術i?j??	???燬╞癮??8??r:   c           
+      筇  ^ ? UR                  SSS9  T R                  USS5        [         Vs/ s H   o"S   PM	  
+   nn[        R                  " UT R
+                  USSS 9nUR
+                  SSSS	S
+S
+9  UR                  SU 4S
+ j5        T R                  USS5        [        R                  " U[        S9oUR
+                  SSSS	S9  [        R                  " USS[        SSSS9 T l        T R                  R                  SS9  [        R                  " U[        S9ofR
+                  SSSS	SS
+9  T R                  UST R                  [         5      R                  SSS9  T R                  UST R"                  [$        5      R                  SSS9  T R                  USU 4S  j[&        5      R                  SSS9  T R                  US!U 4S" j[&        5      R                  SS#9  T R                  US$S%5        [        R                  " UT R(                  / S&QSS'9R
+                  S%SSS	S(S
+9  T R                  US)S*5        [        R*                  " UT R,                  S+9R
+                  S*SSS	S(S
+9  T R                  US,S-5        [        R*                  " UT R.                  S+9R
+                  S-SSS	S(S
+9  [        R                  " US.[        [&        S/SSS09 T l        T R0                  R
+                  S1SSS	S2S
+9  T R                  US3T R2                  [         S4S59R
+                  S(SSS	S6S
+9  T R5                  5         [        R                  " US7[        S8S9SS:9R
+                  S
+SSS	S1S
+9  g s  snf );NrJ   ??weightu   閫夋嫨澶勭悊鍔熻兘r   ?readonly?   )?textvariable?values?stater}   ?ewr?   ?   r?  z<<ComboboxSelected>>c                 ?   >? TR                  5       $ r^   )?_hint)r?   r?  s    €r-   ?<lambda>?App._tools_ui.<locals>.<lambda>M  s   鴢 衏g譪m裞m詂or:   u   寰呭鐞嗘枃浠秗?  ?r?  r?  r?  r?  ?   鏈€夋嫨鏂囦欢z#666r?   ?leftiv  )r?   r?  r?  rt   ?justify?wraplengthr?   r?  r   )r   ?   u   + 娣诲姞鏂囦欢)r   ?   ??sider?  ?   娓呯┖u   涓婄Щ椤哄簭c                  ?   >? T R                  S5      $ ?N???_move?r?  s   €r-   r
+  r  U  s
+   鴢 ―疛㎎皉琋r:   u   涓嬬Щ椤哄簭c                  ?   >? T R                  S5      $ ?NrJ   r  r  s   €r-   r
+  r  V  s
+   鴢 ―疛㎎皅琈r:   ?r  ?   杈撳嚭璐ㄩ噺?   r?   )r  r  r  r  ?   椤电爜 / 椤哄簭r?   ?r  u   闄勫姞杈撳叆r?  r   i  )r?   r?  r?  r  r  rt   r?   ?r?   r?   u!   閫夋嫨杈撳嚭鏂囦欢骞跺紑濮嬪鐞嗛
+   )?font_size?   uz   鎻愮ず锛氶〉闈㈣寖鍥村～鍐?1,3,5-8锛涜皟鏁撮『搴忓彲鍐?3,1,2銆傚浘鍍忓帇缂╀細鏍呮牸鍖栭〉闈㈠苟澶卞幓鏂囨湰鍙€夋€с€傶#555轼  ?r?   r?  r?  r  r  )?columnconfigurer?  ?TOOLSr   ?Comboboxr$  r?  ?bindr   r?  r?  r?  ?file_labelr?  ?_btn?add_filesr?  ?clear_filesr?  ?BLUEr   ?Entryr'  r(  ?hint?run_toolr
+  ) r?  rB   r?   rm  ?cb?paner?  s    `      r-   r?  ?App._tools_uiH  s_  鴢 ???榪???*???怓?/??2?$?%歶???檜??%????―疦㎞?蠵Z衋c?d??
+??怉楺燿????:???蠧Y訸o?p???怓?,≦?/?廥奨恌??&?癚竌纓蠶S爕?T?????<??蠾Z衏i衭x?y??????????&?廐奌怴渦?%??窤繱萣蠽[爃?\?????&爐碿?:????繴蠶V???W????恏榯?/?/??4?9?9竩??9?Q????恘?:??@?E?E?蠾\?E?]????恘?9????D?D??D?Q???怓???,?
+??怴????b衖s?t?y?y衺?  HI?  QU?  []?  cd?y?  	e???怓?,≦?/?
+???燿?5?:?:竡?蠶U衃]衏d?:?e???怓???,?
+???燿?1?6?6?繟萒蠾Y衉`?6?a????爎琔磀纁蠷X衊c?d????????燗⊿癰竑??E?????<窽縘筣?衁[??\?a?a衒g衞p衳|?  CE?  KM?a?  	N?????
+????  Z?  ^c?  gm?  y|?  EK?  	L?  	Q?  	Q?  VW?  _`?  hk?  qs?  yz?  	Q?  	{- &s   ?M!c           
+      蟥   ? U R                   R                  5       nSSSSSSS SS	S
+S
+SS
+.nU R                  R                   UR                  US5      S9  g )Nu<   闄勫姞杈撳叆锛氭棆杞搴?90銆?80銆?70锛堥粯璁?90锛夈€倁3   闄勫姞杈撳叆锛氬～鍐欐按鍗版枃瀛楋紝鏀寔涓枃銆倁!   闄勫姞杈撳叆锛氬～鍐欐柊瀵嗙爜銆倁$   闄勫姞杈撳叆锛氬～鍐欏凡鏈夊瘑鐮併€倁$   椤电爜鍙暀绌鸿〃绀哄叏閮ㄩ〉闈€倁   椤电爜锛氬 1,3,5-8銆倁$   椤电爜锛氬～鍐欒鍒犻櫎鐨勯〉闈€倁6   椤电爜锛氬 3,1,2锛屽繀椤绘槑纭墍闇€椤甸潰椤哄簭銆倁8   鎻愬彇鏂囧瓧鐢熸垚 Word锛屼笉淇濊瘉淇濈暀鍘熷鐗堝紡銆倁9   閫愯鎻愬彇鏂囨湰鍒拌〃鏍硷紝涓嶆槸楂樼骇琛ㄦ牸璇嗗埆銆倁?   姣忛〉鎴愪负涓€寮犲浘鐗囧够鐏墖锛屼笉鏀寔閫愬厓绱犵紪杈戙€倁*   姝ゅ伐鍏烽渶瑕佸彟澶栧畨瑁?LibreOffice銆?r?   r?   r?   r?   r?   r?   r?   r?   r?   r?   r?   r?   uV   鏀寔灏嗙粨鏋滀繚瀛樺埌浠绘剰鑷€変綅缃紱鏍规嵁宸ュ叿鍔熻兘閫夋嫨 PDF 鎴栧浘鐗囥€俽?  ?r$  rs  r5  ?config)r?  r,  r5  s      r-   r
+  ?App._hintc  sp   € ????????Y?  pe?>蠰r?M?6蠪l?[?W?Y?]?I?K?? 	
+????榙焗檋爎?  +C?  D??  	Er:   c                 骽   ? [         R                  " XX4U[        :w  a  SO[        SUS4SSSS [        S9
+$ )	Nr?  r?  r?  ?flatr%  r  ?hand2)
+r?   ?commandr?  r?  rs   ?reliefr?  r?  ?cursor?activebackground)r   ?Buttonr?  r?  )r?  rB   ?label?cmd?colorr&  s         r-   r0  ?App._btnp  sA   € ?弝妝??萫訳[薽?詀d?3癐竑?E萔衁[衋b衘q?  DJ?K? 	Kr:   c                 ?  ? U R                   R                  5       nUS:X  a  S/nO
+US:X  a  S/nOS/n[        R                  " SUS /-   S9nU H/  nX@R                  ;  d  M  U R                  R
+                  U5        M1  
+   U R
+                  5         g )	Nr?   )u   鍥剧墖鏂囦欢z,*.png *.jpg *.jpeg *.bmp *.tif *.tiff *.webpr?   )u
+   Word 鏂囦欢z*.docx *.doc)u
+   PDF 鏂囦欢r?   u   閫夋嫨鏂囦欢?u   鍏ㄩ儴鏂囦欢z*.*)r   ?filetypes) r$  rs  r   ?askopenfilenamesr5  rS   ?_refresh_files)r?  r,  ?typesr5  r.  s        r-   r1  ?App.add_filest  s?   € ????????
+???e?f檜????E?F??*?+圲??)?)??蠵f蠴g袸g?h??圓????"????4?4癚?7? ????r:   c                 ?   ? / U l         U R                  5         g r^   )r5  rN  r  s    r-   r2  ?App.clear_files~  s   € 燫????;?;?=r:   c                 箨   ? [        U R                  5      S:?  aZ  US:  a  U R                  SS  U R                  S S -   OU R                  SS  U R                  S S -   U l        U R                  5         g g )NrJ   r   r  )r|   r5  rN  )r?  rZ   s     r-   r  ?App._move  sj   € ?坱弞墇????;窤????燗燘?????癆??6???萣萩?蠸W譙]裇]衈a衉a蠸b袰b圖孞????!? r:   c                 ?  ? SR                  S [        U R                  S S 5       5       5      n[         U R                  5      S:?  a  US[         U R                  5      S-
+   S3-
+  nU R                  R
+                  U=(       d    SS 9  g )Nrl  c              3   骮   #   ? U  H$  u  pUS -    S[        U5      R                   3v ?  M&  
+   g7f)rJ   z. N)r   ?name)ra   r?   r.  s      r-   rc   ?App._refresh_files.<locals>.<genexpr>?  s+   ? € ?T?S??????楻?燪???榽?.?S鵶   ?.r  u
+   
+...杩樻湁 ?    涓枃浠秗  r?  )r   rz   r5  r|   r/  r<  )r?  rO  s     r-   rN  ?App._refresh_files?  sq   € ?廔塈?T?繢荍罦萺蠵Q繬?S?T?T??坱弞墇???楽燣?癟穁盳???B?C??N?N楽?????燙?<?<??=r:   c           
+      鬆   ? [         R                  " SS9U l        [         R                  " X R                  [        SSSSS S9R
+                  S	S
+9  g )
+Nu*   灏辩华 路 鏈湴 PDF 鎿嶄綔涓嶄笂浼犳枃浠秗?  r?  r?  r?   r?  r  ?r  r?  r?  rs   rt   r?  r?  r?   r?  )r   r?  ?statusr?  r3  r?  r  s    r-   r?  ?App._footer?  sR   € ?桳扡?S?T???
+???????蠫`衕k衠s衴z?{?  	A?  	A?  GJ?  	A?  	Kr:   c                 篥   ^ ^^^? T R                   (       a  g ST l         T R                  R                  S5        T R                   SS9  UUU 4S jnUU 4S jm[        R
+                  " USS 9R
+                  5         g )NTu(   鈼?姝ｅ湪鎵ц锛岃鍕垮叧闂▼搴忊€watch?rC  c                   蠖   >^? T" 5       mTR                  SUU4S j5        g ! [          a,  n TR                  S[        U 5      4U4S jj5         S n A g S n A ff = f)Nr   c                  ?   >? T " TS 5      $ r^   r9   )?finish?rets   €€r-   r
+  ?App._async.<locals>.worker.<locals>.<lambda>?  s   鴢 ﹙癱???r:   c                 ?   >? T" S U 5      $ r^   r9   )?errrd  s    €r-   r
+  rf  ?  s   鴢 ??萐訟Qr:   )?afterr!   r?   )r?  re  rd  ?jobr?  s    @€€€r-   ?worker?App._async.<locals>.worker?  s;   鶂 ?揈????燼???@?R???≦?竌??Q?R?RR鷖   ?" ?A?A?Ac                 笕   >? STl         TR                  SS9  TR                  R                   U(       a  SOS5        U(       a  [        R
+                  " SU5        g T" U 5        g ) NFr   ra  u%   鉁?澶勭悊澶辫触锛屾煡鐪嬮敊璇俊鎭痷   鉁?澶勭悊瀹屾垚u   澶勭悊澶辫触)r?  r<  r]  r   r    ?showerror)re  rh  ?doner?  s     €€r-   rd  ?App._async.<locals>.finish?  sM   鴢 ?圖孖楧烱橩╮楰?2?????謓q袰j?  xJ?  4K???'?'?皊?;?恈?r:   )?target?daemon) r?  r]  r   r<  ?threading?Thread?start)r?  rj  ro  rk  rd  s   ``` @r-   ?_async?App._async?  s[   麁 ???怴???恡梴憑???Q?R蠸W譙^裇^衒m蠸^裇n?	S?	? 	???╠?3?9?9?;r:   c           	      ?  ^ ^^? T R                   (       d  [        R                  " SS5        g T R                  R	                  5       m[
+        U4S j[         5       5      nS[        R                  " SST5      -   S -   U-   nT R                  R	                  5       =(       d!    [        [        R                  " 5       S-
+  5      n[        R                  " S	X2S U-   UR                  5       S
+-   S
+U-   4S/S
+9mT(       d  g T R!                  UUU 4S jS 5        g )N?   缂哄皯鏂囦欢u   璇峰厛娣诲姞寰呭鐞嗘枃浠禼              3   驜   >#   ? U  H  oS    T:X  d  M
+  US   v ?  M  
+   g7f)r   r   Nr9   )ra   r?   r,  s     €r-   rc   ?App.run_tool.<locals>.<genexpr>?  s    € ?I瞮???纀?????瞮   ???oycy_z[^\w-]r?   r?   ?Downloadsu   閫夋嫨杈撳嚭鏂囦欢淇濆瓨浣嶇疆u     鏂囦欢z*.rK  )r   ?initialdir?initialfile?defaultextensionrL  c            	      笕   >? [        T TR                  TTR                  R                   5       TR                  R                   5       TR
+                  R                   5       5      $ r^   )rJ  r5  r   rs  r'  r(  )r,  r_  r?  s   €€€r-   r
+  ?App.run_tool.<locals>.<lambda>?  sB   鴢 ??―疛㎎皌窪縇筁?L?L?N萾蟸蓗譕a袿a覱c衐h譫n裠n譫r裠r觗t?ur:   c                 ?   ? [         R                  " SSU  35      $ )Nu   澶勭悊鎴愬姛u   宸蹭繚瀛樺埌锛?)r    ?showinfo)re  s    r-   r
+  r?  ?  s   € 渮?2?2?蠨U蠽Y蠻Z蠦[?\r:   )r5  r    ?showwarningr$  rs  ry   r,  rN   ?subr?  r?   r   ?homer   ?asksaveasfilename?upperrv  )r?  r?   rW  ?initr,  r_  s   `   @@r-   r6  ?App.run_tool?  s?   鷢 ?弞弞??0?0?蠤]?^衉e????????I祏?I?I??擱梀扸業燾??-?-╟?1??5??廩塠廮塤??>???=?>???)?)?P衆`?#燙?癈稩盜矺??I?萻??S蠺j?k?m??怓????u?\?	^r:   c           	      髵  ? UR                  SSS9  [        R                  " US[        [        SS9R
+                  SSS SS	S
+9  [        R                  " US
+[        SS
+SS9R
+                  SSS SS9  [        R                  " SS9U l         U R                  USU R                  [        5      R
+                  SSS SSS
+9  [        R                  " XR                  [        [        SSS9R
+                  SSS SS9  [        R                  " US[        [        SS9R
+                  SSS SSS
+9  [        R                  " USSSS9U l        U R                  R
+                  S SS!SS9  U R                  R                  S"U R                  R                  5       5        U R                  US#U R                   ["        5      R
+                  S$SS SS%S
+9  [        R                  " US&SS'S9U l        U R$                  R
+                  S(SS)SS*S
+9  UR'                  S(SS9  U R                  US+U R(                  [        5      R
+                  S,SS-SS.S
+9  S/U l        g )0Nr   rJ   r   u   AI 璇诲彇鏂囨。骞剁敓鎴愬垎鏋惄r?  ?   r?  r?  r?   r?  )?   r  r?  u   鐐瑰嚮閫夋嫨 PDF / TXT / DOCX锛屾彁鍙栨枃鏈悗鍙戦€佽嚦浣犻厤缃殑 API 鏈嶅姟銆傝鍕夸笂浼犳満瀵嗘枃浠跺埌涓嶅彲淇℃湇鍔°€俽(  i*  r  r*  r
+  u   灏氭湭閫夋嫨鏂囨。r?  u   閫夋嫨 AI 鍒嗘瀽鏂囦欢r   r  i4  )r  r?  r?  r  r  r!  u   杈撳叆浣犵殑鍒嗘瀽闂锛歳?  r?   )r'  r!  ?word?r?  r?  )r~   ?wraprs   r?  r   ?1.0u   浣跨敤鎵€閫夋ā鍨嬪垎鏋愭枃妗?   r'  r?   r?  r  ?nsew)r   r?   u   淇濆瓨 AI 鍒嗘瀽缁撴灉r  r?  ?r   r?   r   )r+  r   r?  r?  r?  r?  r?  ?ai_filer0  ?pick_ai_filer3  ?Text?ai_prompt?insertr?  rs  ?analyzer?  ?ai_result?rowconfigure?save_ai_result?ai_path?r?  rB   s     r-   r?  ?App._ai_ui?  s?  € ???榪???*?
+????=??蠸s?t?y?y衺?  HI?  QT?  Z\?  bh?y?  	i?
+????  _?  ch?  lr?  ~A?  JP?  	Q?  	V?  	V?  [\?  de?  mp?  vx?  	V?  	y?梊抃?<?=???????1??C?C腄?I?N?N蠸T衆]衑h衝p衯w?N?x?
+???碪糲萐衁_?`?e?e衘k衧t衸?  FH?e?  	I?
+????:糴膕蠵p?q?v?v衶|?  EF?  NQ?  WY?  _e?v?  	f?梬抴榲≦癋蠤Y?Z??????????窧????????榚燚?5?6?????9???膕?K?P?P蠻V衈_術j衟r衳z?P?{?梬抴榲≧癡蠥Z?[??????????竍纄??L萔譓`袽`衋b衘k蠱`袽l?????1??E?E腸?J?O?O蠺U衇^衒i衞q衱}?O?~???r:   c                 髠   ? [         R                  " SS/S9nU(       a"  Xl        U R                  R	                  U5        g g )N)u   鏀寔鐨勬枃妗*.pdf *.txt *.docxrK  )rL  )r   ?askopenfilenamer?  r?  r   )r?  r.  s     r-   r?  ?App.pick_ai_file?  s3   € ??$?$?X衁o?p?q???孿楧烲橪?,?,≦?/?r:   c                 螈  ? [        U5      R                  R                  5       nUS:X  a  [        U5      R                   SSS9$ US:X  a.  SS KJn  SR
+                  S	 U" U5      R                   5       5      $ US
+:X  a8  [        R                  " U5       nSR
+                  S
+ U 5       5      sS S S 5        $ [        S5      e! , (       d  f       N= f)
+N?.txtz	utf-8-sigrj  )r2   rk  z.docxr   r?   rl  c              3   ?   #   ? U  H  oR                   v ?  M  
+   g 7fr^   r?  r`   s     r-   rc   ?App.read_ai_text.<locals>.<genexpr>?  s   ? € ?G?F?烿濾?F鵶   ?r?   c              3   驚   #   ? U  H  oR                  5       v ?  M  
+   g 7fr^   r?   r`   s     r-   rc   r?  ?  s   ? € ?O蔘?穤眤穦皘蔘鵶   ?u   浠呮敮鎸?PDF銆乀XT銆丏OCX)
+r   r?  ?lowerr7   r  r?   r   ?paragraphsr?   r?   rQ   )r?  r_  r?   r?   rF   s        r-   ?read_ai_text?App.read_ai_text?  s?   € ??婮???#?#?%????渄?沯?2?2窴葃?2?Y?Y????%????G癲玘?F?F?G?G?G????????燗═痀℡?O蒕?O?O????5?6?6? !?鷖   ?C ? 
+C c                 蟥   ? U R                   R                  5       R                  5       =(       d$    [        R                  " [
+        S5      =(       d    S$ )N?defaultr   )r?  rs  rK   ?keyring?get_password?SERVICEr  s    r-   ?_key?App._key?  s3   € ?弜墄弢墊媬?#?#?%?V??=?=糶纈?P?V蠺V?Vr:   c                 笃  ^ ^^^? T R                   (       d  [        R                  " SS5        g T R                  R	                  5       R
+                  5       R
+                  S5      mTR                  S5      (       dD  TR                  S5      (       d.  TR                  S5      (       d  [        R                  " S S5        g T R                  5       mT(       d$  S	T;  a  S
+T;  a  [        R                  " S
+S5        g T R                  R	                  S
+S5      R
+                  5       mT(       d  [        R                  " SS5        g UUUU 4S jnT R                  UU 4S j5        g )Nry  u   璇烽€夋嫨鏂囨。rS  ?https://?http://localhost?http://127.0.0.1u   涓嶅畨鍏ㄧ殑 API 鍦板潃u?   璇蜂娇鐢?HTTPS API 鍦板潃锛涙湰鍦版ā鍨嬪彲浣跨敤 localhost銆俽V  rW  ?API Keyu/   璇峰厛鍦?API 璁剧疆涓～鍐欏苟淇濆瓨瀵嗛挜銆俽?  ?endu   缂哄皯闂u   璇疯緭鍏ュ垎鏋愰棶棰榗                   ?  >? TR                  TR                  5      n U R                  5       (       d
+  [         S5      e[	        U 5      S:?  a  U S S S-   n SSS.S T SU  3S./n[
+        TTR                  R                  5       R                  5       TUS	5      $ )
+Nu6   鏂囨。鏈彁鍙栧埌鏂囧瓧锛涙壂鎻忕増 PDF 闇€瑕?OCR銆俰`?  u+   
+[鏂囦欢杩囬暱锛屽凡鎴彇鍓?60000 瀛楃]?systemu`   浣犳槸涓ヨ皑鐨勪腑鏂囨枃妗ｅ垎鏋愬姪鎵嬨€傚彧鏍规嵁缁欏畾鏂囨。浣滅瓟锛屾湭鐭ラ儴鍒嗗簲璇存槑銆偐?rolero  ?useru   
+
+---鏂囨。鍐呭---
+r?   )r?  r?  rK   rQ   r|   r?  r   rs  )r?   rf  r`  r?  r?  r?  s     €€€€r-   rj  ?App.analyze.<locals>.job?  s?   鴢 ??"?"????0圖??????i?j?j??媦??燚??燣?_?_榯?&?  2T?  U?$???Q蠷V蠶W?X?Y?[圚??燭?5?;?;?=竎???O?Or:   c                 髏   >? TR                   R                  SS5      TR                   R                  SU 5      4$ )Nr?  r?  )r?  ?deleter?  )?ansr?  s    €r-   r
+  ?App.analyze.<locals>.<lambda>?  s.   鴢 燚?9?9???F纓莮羱譍\袵\衇b衏f覩g?hr:   )r?  r    r?  r   rs  rK   rY  r   rn  r?  r?  rv  )r?  rj  r`  r?  r?  s   ` @@@r-   r?  ?App.analyze?  s&  麁 ?弢弢淛?2?2?蠦S?T蠻[?廬塢??? ?&?&?(?/?/??4????榸?*?*???蠧U?V?V衉c譥n裚n?  pB?  `C?  `C?? ? ?:?|?}?  E?廔塈婯??恵??.?纃?J?譑a襅a衎k?  m^?  L_?  `f?弤墌?!?!???.?4?4?6??攋?,?,╚?S?T蠻[?	P? 	P? 	
+??怌?h?ir:   c                 ?  ? U R                   R                  SS5      R                  5       nU(       d  g [        R                  " SS/SS9nU(       a1  [
+        U5      R
+                  US S9  [        R                  " S	U5        g g )
+Nr?  r?  r?  )u   鏂囨湰鏂囦欢z*.txtu   AI鏂囨。鍒嗘瀽缁撴灉.txt)r?  rL  r€  r0   r1   ?   淇濆瓨鎴愬姛)	r?  rs  rK   r   r?  r   rD   r    r?  )r?  rO  r.  s      r-   r?  ?App.save_ai_result?  sq   € ?廚塏??榰燯?+?1?1?3?????&?&?蠮b蠭c?  qK?  
+L??孴?媁???╓??5磈?I?I?衁Z?[?r:   c           	      ?  ? UR                  SSS9  [        R                  " US[        [        SS9R
+                  SSS SS	S
+S
+9  U R
+                  USS5        [        R                  " XR                  S
+9R
+                  SSSS	SS9  U R
+                  USS 5        [        R                  " XR                  S
+9R
+                  S SSS	SS9  U R
+                  USS5        [        R                  " XR                  SS9R
+                  SSSS	SS9  [        R                  " US[        SSSS9R
+                  SSS SS	SS
+9  U R                  USU R                  [        5      R
+                  SSSS	SS9  U R                  US U R                  [         5      R
+                  SSSS	SS9  U R                  US!U R"                  [        5      R
+                  S"SSS	SS9  [        R                  " US#[        [        S$SS%9R
+                  S&SS SS	S	S
+9  g )'NrJ   r   u#   AI API 閰嶇疆  /  鑷甫瀵嗛挜 BYOKr?  r?  r   r   r?   r?  )?   r?  )r?  r?  ?columnspanr?  r?  r?  zAPI Base URLr#  r   r  r?  u	   妯″瀷 IDr?  r!  u   鈥?r  ?showu?   绀轰緥锛歄penAI 鍏煎鎺ュ彛 /v1 + 妯″瀷鍚嶇О銆傚瘑閽ヤ繚瀛樺湪 Windows 鍑嵁绠＄悊鍣紝涓嶅啓鍏ヨ缃?JSON銆?鏀寔鏈湴 OpenAI 鍏煎鏈嶅姟锛堜緥濡?localhost:11434/v1锛夛紱涓嶅悓鏈嶅姟鍟嗙殑鎺ュ彛鍙兘瀛樺湪鍏煎鎬у樊寮傘€俽(  r  i   )r?   r?  r?  r  r  r?   r?  u   淇濆瓨 API 璁剧疆r?  r?   u   娴嬭瘯 API 杩炴帴u   娓呴櫎宸蹭繚瀛樼殑 API Keyr?   u?   闅愮鎻愮ず锛氬熀纭€ PDF 宸ュ叿浠呭湪鏈満澶勭悊銆侫I 鍒嗘瀽浼氬皢鎻愬彇鍑虹殑鏂囨湰涓婁紶鍒版墍閰嶇疆鐨?API 绔偣锛涜纭鏈嶅姟鎻愪緵鍟嗙殑鏁版嵁鏀跨瓥銆俰?  r*  r  )r+  r   r?  r?  r?  r?  r?  r   r4  r   r   r?  r0  ?save_settingsr?  ?test_apir3  ?delete_keyr?  s     r-   r?  ?App._settings_ui?  sR  € ???榪???*?
+????B膃蘳蠿x?y?~?~?  DE?  MN?  Z[?  cf?  ln?  t{?~?  	|???怓???,?
+????4?9?9竌纐蠵T衂\衎c?9?d???怓?爍?)?
+????1?6?6?繟萒蠾Y衉`?6?a???怓?燪?'?
+???癊?:????繟萉蠽Z衊b衕i???j?
+????  M?榁‵竎?	C逤G?華蠻V衎c衚n衪v衸~?袰?????,═??????D?I?I萢蠾X衊c衖k衠s?I?t?????,═痌??@?E?E?蠸T衆_衑g衜o?E?p?????5癲穙眔腸?J?O?O蠺U衇^衒i衞q衱x?O?y?
+????  C?  GL?  PS?  _b?  kq?  	r?  	w?  	w?  |}?  EF?  RS?  [^?  df?  ln?  	w?  	or:   c                  ?  ^ ^^^^ ? T R                   R                  5       R                  5       mT R                  R                  5       R                  5       m T R	                  5       m[
+        T5      mT(       d$  ST;  a  ST;  a  [        R                  " SS5        g T R                  R                  ST-   S -   5        UUU 4S jnUU U 4S	 jnT R                  X#5        g ! [          a*  n[        R                  " S[        U5      5         S nAg S nAff = f)
+Nu   鍦板潃妫€鏌ュけ璐V  rW  u   缂哄皯 API Keyu>   璇峰厛濉啓 API Key锛堜笉蹇呭厛淇濆瓨锛夛紝鍐嶆祴璇曡繛鎺ャ€倁   姝ｅ湪杩炴帴锛歾 ...c                  ?   >? [        T TTSSS./S5      $ )Nr?  u   璇峰彧鍥炲锛氳繛鎺ユ垚鍔焤?  ?   )r?  )r`  r?  r   s   €€€r-   rj  ?App.test_api.<locals>.job?  s   鴢 ?燿??竑蠴l?m?n衞q?r?rr:   c           
+      髠   >? TR                   R                  S5        [        R                  " SST ST SU S S  35        g ) Nu   API 娴嬭瘯鎴愬姛u   API 杩炴帴鎴愬姛u	   鎺ュ彛锛歶
+   
+妯″瀷锛歶
+   
+杩斿洖锛歩^  )r]  r   r    r?  )r?  ?endpointr   r?  s    €€€r-   ro  ?App.test_api.<locals>.done?  sF   鴢 ?廗塊廜塐?.?/????2癥竫竕?蠺Y蠸Z衂e衒l衜q衝q衒r衑s?t?ur:   )r   rs  rK   r   r?  rb  r!   r    rn  r?   r?  r]  r   rv  )r?  r?  rj  ro  r`  r?  r?  r   s   `   @@@@r-   r?  ?App.test_api?  s?   鼆 ?廬塢??? ?&?&?(?╰痾﹝瘇﹡???E?E?G?菵螴蒊薑??!??'圚?恵??.?纃?J??"?"?3?t?u衯|??????)??2??9?:?r?	v? 	
+??怌? ?V渏?2?2?G?華??O訮VV鷖   ?
+C ?
+D? D?Dc                  鬄  ? U R                   R                  5       R                  5       nUR                   S5      (       dD  UR                   S5      (       d.  UR                   S5      (       d  [        R
+                  " SS5        g [
+        U R                  5      o"R                  XR                  R                  5       R                  5       U R                  R                  5       S9  [        U5        X l         U R                  R                  5       R                  5       (       a]  [        R                  " [        S U R                  R                  5       R                  5       5        U R                  R!                  S5        [        R&                  " S
+S
+5        g ! ["          a*  n[        R
+                  " S	[%        U5      5         S nAg S nAff = f)Nr?  r?  r?  u   API 鍦板潃閿欒u<   杩滅▼ API 璇蜂娇鐢?HTTPS锛涙湰鍦板彲浠ヤ娇鐢?localhost銆?r   r   r   r?  r   u   瀵嗛挜淇濆瓨澶辫触r?  uB   API 鍦板潃鍜屾ā鍨嬪凡淇濆瓨锛汚PI Key 浣跨敤绯荤粺鍑嵁瀛樺偍銆?r   rs  rK   r   r    rn  rr  r?  ?updater   r   rG   r?  r?  ?set_passwordr?  r   r!   r?   r?  )r?  r`  rF   r?  s       r-   r?  ?App.save_settings?  s<  € ?廬塢??? ?&?&?(????榸?*?*???蠧U?V?V衉c譥n裚n?  pB?  `C?  `C?? ? ?3?r?s衪z?坱弜墄?????穓眏穘眓?F?L?L?N蠾[譝c裌c譝g裌g覹i??j???楺擧?????????!?!??$?$╕皌穢眡穦眧硚?K?K?M?N萾蟲蓌蟶蓔衆^設_???楴?o?p ?Z??6?6?K藽蠵Q薋?S訲ZZ鷖   ?AF ?
+G? G ?Gc                 箧   ? [         R                  " [        S5        U R
+                  R
+                  S5        [        R                  " SS5        g ! [         R                  R                    a     NSf = f)Nr?  r   u   娓呴櫎瀹屾垚u/   宸插皾璇曟竻闄?Windows 鍑嵁涓殑 API Key銆?	r?  ?delete_passwordr?  rk  ?PasswordDeleteErrorr?  r   r    r?  r  s    r-   r?  ?App.delete_key?  sK   € ??#?#↖?6?????怰???,?,╚?m?n 弤墌?1?1?6??6鷖   ?A ?A0?A0)r?  r?  r?  r?  r   r?  r?  r(  r/  r5  r5  r?  r   r$  r?  r'  r?  r   r]  )r   )r?   )?__name__?__module__?__qualname__?__firstlineno__r?  r?  r?  r?  r?  r?  r
+  r0  r1  r2  r  rN  r?  rv  r6  r?  r?  r?  r?  r?  r?  r?  r?  r?  r?  ?__static_attributes__?__classcell__?r?  s   @r-   r?  r?  !  s?   鴨 ?A?+?P?I?B?{?
+E?K?? >?"?>?K?
+<?	^??0?7?W?j?\?o?
+?	q?o? or:   r?  z #ffffffz #f5f7fbz #e5e9f0z #677488z #1768eez #2bbd86))r?   ?   鍚堝苟PDFu#   灏嗗涓?PDF 鍚堝苟涓轰竴涓枃浠秛   鈫攝 #ff5258?   鍏ㄩ儴)r?   u	   鍒嗗壊PDFu   鎸夐〉鐮佹媶鍒嗗苟涓嬭浇 ZIPu   鉁倆 #4388far?  )r?   u   鏃犳崯鍘嬬缉u'   浼樺寲鏂囦欢缁撴瀯锛屼繚鐣欏彲閫夋枃瀛梪   鈬 #30bb85r?  )r?   u
+   PDF杞琖ordu#   鎻愬彇鏂囧瓧涓?DOCX锛堝熀纭€鐗堬級?Wz #4585eerN  )r?   u	   PDF杞琍PTu   姣忛〉杞崲涓哄浘鐗囧够鐏墖?Pz #ff8040rN  )r?   u
+   PDF杞珽xcelu   鎻愬彇鏂囨湰鑷崇數瀛愯〃鏍稼Xz #32bf82rN  )r?   u	   PDF杞琂PGu   澶氶〉楂樻竻 JPG 鎵撳寘 ZIP?   鈻 #ff8553rN  )r?   u   鍥剧墖杞琍DFu   灏嗗寮犲浘鐗囧悎骞朵负 PDFu   鈻 #f95871rN  )r?   u	   鏃嬭浆PDFu   鎵归噺鏃嬭浆 PDF 椤甸潰u   鈫粃 #8a6cf5?   椤甸潰)r?   r?   u   涓烘瘡椤靛姞鍏ラ〉鐮佢12z #f5c33er?  )r?   u   鏂囧瓧姘村嵃u   鍙緭鍏ヤ腑鏂囨按鍗版枃瀛梪   鈼坺 #4c8bf8r?  )r?   u	   缁勭粐PDFu   鎸囧畾鏂伴〉鐮侀『搴弖   鈻 #8a93aar?  )r?   r?   u   閫夋嫨闇€瑕佷繚鐣欑殑椤甸潰u   鈻 #446df1r?  )r?   r?   u   绉婚櫎鎸囧畾 PDF 椤甸潰u   鈭抸 #ee7778r?  )r?   u	   淇濇姢PDFu   娣诲姞鏂囦欢鎵撳紑瀵嗙爜u   鈾檢 #ed5f88rM  )r?   u	   瑙ｉ攣PDFu   浣跨敤鍘熷瘑鐮佽В闄や繚鎶   鈾 #62baf6rM  )r?   u   PDF杞枃鏈瑄   鎻愬彇鍙€夋嫨鐨勬枃鏈Tz #6d78earN  )r?   u   鍥惧儚鍘嬬缉u!   閲嶇粯椤甸潰浠ュ噺灏忔枃浠朵綋绉痷   鈻緕 #27bca8r?  )r?   r?   u   瀵煎嚭宓屽叆鐨勬墍鏈夊浘鐗噐?  z #ff9564rN  )r?   u
+   Word杞琍DFu   闇€鍙﹁ LibreOfficer?  z #518bdbrN  )r?   u   娓呯悊鍏冩暟鎹畊   鍒犻櫎鏂囨。鍏冩暟鎹畊   鈼噝 #7e8ca9rM  c                   蟋   ^ ? \ rS rSrU 4S jrS rS rS r SS jrSS  jr	S r
+S	 r
+S
+ rS
+ r
+S rS
+ rS rS rS rS rSS jrS rS rS rS rSrU =r$ )?ModernAppi  c                 篥   >? SU l         SU l        S U l        0 U l        S U l        [
+        TU ]  5         U R                  S5        U R                  S5        U R                  SS5        U R                  [        S 9  g )Nr?  r   u    oycy鐨凱DF宸ュ叿绠? 路  Desktop?1500x920i?  r)  r?  )?filter_name?search_text?selected_idx?card_views?active_card_opr?  r?  r   r?  r?  r?  ?BGr?  s    €r-   r?  ?ModernApp.__init__  sf   鴢 ?!?????2?癲?G???? ???
+???????5?6???恓?!???╰癈?8??????Nr:   c           	      骦  ? [         R                  " U 5      oR                  S5        UR                   S[        SS9  UR                   SSS [        [
+        SS9  UR
+                  SS	[        4/S	[        4/S
+9  UR                   S
+[        S9  UR                   S
+SSS9  UR                   SSS9  g )Nr?  r?  r   r?  r?  ?r?  r'  r?  )r?  r%  )rs   r?  r?  r?  r?  rH  )r?  r?  r?  r?  r?  r?   r?  )r?  rs   r?  r  r?  )	r   r?  r?  r?  r?  ?SOFTr?  ?WHITE?ACCENTr?  s     r-   r?  ?ModernApp._style&  s?   € ?
+??怐????爁?-?	??怟????<?	??怬?I蠷Y詄g詓w?  EF??  	G?	??坥?磂?<?=?訴\蠮]蠭^??_?	??怘???+?	??怘燫?F??G?	??怟???*r:   c           
+      ?  ? [         R                  " U [        SS9oR                   SS9  UR	                  S5        [         R
+                  " US[        S SS	9R                   S
+S
+S9  [         R
+                  " US
+[        SSS	9R                   S
+S9  [         R
+                  " USS[        SSSS9 R                   S
+SS9  [         R
+                  " US[        [        SS	9R                   SSS9  [         R                  " U [        SS9R                   SS9  g )N镈   r?  r?   r?  Fu   鈼弞 #ff514b)r?  ?   r?  r  )r?  r  r  r
+   z #161c27)r?  r?  r?  r  z  BAUHAUS / LOCAL  ?#eaf2ff)r?  r  r?  r  r?   )r?   r?  r?  rs   r?  r?  r?  u   PDF 路 鏂囨。杞崲 路 AIr?  ?right?   rJ   )	r   r?  r   r?  r?  r?  r  r  ?BORDER)r?  r?  s     r-   r?  ?ModernApp._header/  s?   € ?廐奌怲淯??-?痟﹉窩╤?@?譇S袮S蠺Y訟Z?
+?????↖??H?M?M蠸Y衉e?M?f?
+????/?窱蠯k?l?q?q衱}?q?~?
+????/??蠰^衐e衚l?m?r?r衳~?  EG?r?  	H?
+????5??蠰e?f?k?k衠x?  A?k?  	B?
+????爍?)?.?.癈?.?8r:   c                  蟥  ? [         R                  " U 5      oR                  SSSSS9  [         R                  " U5      n[         R                  " U5      n[         R                  " U5      nUR	                  USS 9  UR	                  USS 9  UR	                  US	S 9  Xl        U R
+                  U5        U R                  U5        U R                  U5        g )
+Nr?  Tr?  )r  r?   r?  u     鍏ㄩ儴 PDF 宸ュ叿  r?  u     鉁?AI 鏂囨。鍔╂墜  u     鈿?API 涓庤缃? )	r   r?  r?  r?  r?  r?  r?  r?  r?  )r?  r?  r?  r?  r?  s        r-   r?  ?ModernApp._tabs7  s?   € ?廫奬?????╲窽纑萿??U?廦奩恡媉??????楻???????????2??3癉稨盚窻蠩^癏?_衊d譧h裛h衖q?  xO衊h?  aP?????恡????怋???)?)??3r:   c                  驞   ? [         R                  " U[        [        SS9nU$ )NrJ   )r?  ?highlightbackgroundr?  )r   r?  r   r	  )r?  rB   r?  r?  r.  s        r-   ?_panel?ModernApp._panel?  s   € ????淯磛蠶R?S???r:   c                 笤   ? [         R                  " XX4(       a  [        O[        U(       a  [        OSU(       a  SOSU(       a  [        O[        SSSU(       a  [        O[        S SS	S
+S
+9$ )Nz #263246z #105bd4r  r?  r   rJ   r?  r@  r%  r  )r?   rA  r?  r?  rD  ?activeforegroundrB  ?bdr?  r  rs   rC  r?  r?  )r   rE  r  r   r	  )r?  rB   r?   rG  ?primarys        r-   ?_button?ModernApp._buttonC  sK   € ?弝妝????訮U?島燳蜽?衂c?-漊???? 緒礦蘁?1?纀萢?Q? 	Qr:   c           
+      ?  ^ ? UR                  SSS9  UR                  SSS9  [        R                  " US[        SSSS S9 T l        T R
+                  R
+                  SSS	S
+S
+S9  [        R                  " T R
+                  S
+[        SSS S9n[        R                  " T R
+                  [        SS9nT R
+                  R                  USSS9  T R
+                  R                  USSS9  [        R                  " U[        S9n[        R                  " U[        S9nUR                  USSS9  UR                  USSS9  UT l
+        T R                  SU 4S j5        [        R                  " U[        S9ofR                  SSS9  [        R                  " US[        SS S!S"9R                  SS#S$9  [        R                  " US%[        [        S&S!S"9R                  SS'S(S)9  [        R                  " U[        S9owR                  SS*S9  [        R                  " 5       T l        ["        R$                  " U T R                   S+S,9o圧                  S-S.S/S09  UR'                  SS15        T R                   R)                  S2U 4S3 j5        S4 H*  n	T R+                  XyU	4U 4S5 jj5      R                  S-S
+S69  M,  
+   T R-                  U5      T l        T R.                  R                  S7S S
+S8S99  [        R0                  " T R.                  [2        SS:9T l        ["        R6                  " T R.                  S
+T R4                  R8                  S;9T l        T R4                  R=                  T R:                  R>                  S<9  T R:                  R                  S=S>S?9  T R4                  R                  S-S7S S@9  [        R                  " T R4                  [2        S9T l         T R4                  RC                  SAT R@                  SBSC9T l"        T R@                  RG                  SDU 4SE j5        T R4                  RG                  SDU 4SF j5        T R4                  RI                  SGT RJ                  5        T RM                  5         T R-                  U5      o猂                  SSHS9  [        R                  " U
+SI[2        [N        SJSK9R                  SLSM9  [        R                  " U
+SN[2        [N        SOSK9R                  5         [        R                  " U
+SP[2        [        SQSK9R                  SRSM9  T R+                  U
+SST RP                  S 5      R                  SSTSUS)9  T R-                  U5      o籖                  SSVS9  [        R                  " U
+SW[2        SXSOS!S"9R                  SSYSZS)9  S[ Hq  u  p蚚        R                  " U
+[2        S9o頡                  SS\SS)9  [        RR                  " X? S]U
+ 3T RT                  U[2        S^[2        [2        SQS_9	R                  S!S`9  Ms  
+   [        R                  " U
+Sa[2        [        SbSK9R                  S!STScSd9  T R-                  U5      oR                  SSVS9  [        R                  " USe[2        SXSfS!S"9R                  SSgShS)9  [        R                  " USi[2        [N        SOS!S"9T l+        T RV                  R                  SSgS$9  [        R                  " USj[2        [        SQS!S-SkSl9T l,        T RX                  R                  SSgSmS)9  T R+                  USnT RZ                  S 5      R                  SS\SoS)9  T R-                  U5      nUR                  SSp9  [        R                  " USq[2        SrSfS!S"9R                  SSsShS)9  [        R                  " USt[2        [        SQSK9R                  S!SsSu9  T R+                  USvU 4Sw j5      R                  SS\SxS)9  T R]                  U5        T R_                  T R`                  Rc                  5       5        T Re                  5         g )yNr   rJ   r   ?horizontalr  r?  T)?orientr?  r  ?sashwidth?sashrelief?opaqueresizer?  r!  r   r?  ?vertical)r  r?  r  r  r  i  )r?  r}   ?  ?always)r?  ?stretch殡   ?neverr?  榫   閼   辁   c                  ?   >? T R                  5       $ r^   )?_init_sashesr  s   €r-   r
+  ?ModernApp._tools_ui.<locals>.<lambda>T  s   鴢 榙?/?/?1r:   r?   )r?   r?   ?rr   r?  u8   鎵€鏈夊鐞?PDF 鎵€闇€鐨勫伐鍏烽兘闆嗕腑鍦ㄤ竴涓湴鏂箊 #141b27)r?  ?   r?  r?   r?  r?   )rr   r?  up   绠€鍗曟槗鐢? 路  鏈湴澶勭悊  路  瀹夊叏楂樻晥    閫夋嫨宸ュ叿鍚庢坊鍔犳枃浠讹紝璁剧疆鍙傛暟骞跺鍑虹粨鏋溿€俽?  r  )r?   r?   ?rr   r?  r?  ?r?   r'  ?   ?r  r}   r  )r?  r  r?   )r  r?  ?ipadyr   ?writec                  ?   >? TR                  5       $ r^   )?_render_cards)rX   r?  s    €r-   r
+  r(  ]  s   鴢 癉?F?F?Hr:   )r?  rN  r?  rM  c                 ?   >? TR                  U 5      $ r^   )?_set_filter)?vr?  s    €r-   r
+  r(  _  s   鴢 ??:?:??=r:   r  r?  )r   r  r?  )r?  r?  )r  rA  )?yscrollcommandr   r?   )r  rr   )r  rr   r?  )r   r   ?nw)?windowrt   z
+<Configure>c                 骽   >? TR                   R                  TR                   R                  S5      S9$ )N?all)?scrollregion)?tools_canvasr?  ?bbox?r?  r?  s    €r-   r
+  r(  h  s,   鴢 ╰?@?@?J?J蠿\譞i裍i譞n裍n衞t覺u?J?vr:   c                 骮   >? TR                   R                  TR                  U R                  S9$ )N)r}   )r<  ?itemconfigure?canvas_windowr}   r>  s    €r-   r
+  r(  i  s)   鴢 癲?G?G?U?U蠽Z譜h裋h衞p護v裲v?U?wr:   z<MouseWheel>r$  u   鈽?r?  ?   r?  r?  )r%  r   ?r?  u   娣诲姞寰呭鐞嗘枃浠秗?  u   鏀寔涓€娆￠€夋嫨澶氫釜鏂囦欢?r?  r  r?  u   锛?閫夋嫨鏂囦欢r?  )r  r?  r?  r   z #17243ar?  )r?  r  ))r?   u   浣撶Н浼樺厛)r
+   u   璐ㄩ噺涓庝綋绉钩琛?r?   u   娓呮櫚搴︿紭鍏?r?   u   缁嗚妭浼樺厛r'  u        路 z #344057)r?   ?variabler?  r?  r?  ?selectcolorrD  rs   )rt   u$   閮ㄥ垎鏃犳崯鎿嶄綔涓嶄細鏀瑰彉鐢昏川)r?  r  )r?   r?   ?rt   r?  r?  u   褰撳墠宸ュ叿 / 杈撳嚭r?  r?  )r'  r?  r?  ?   灏氭湭娣诲姞鏂囦欢rp   ) r?   r?  r?  rs   rt   r  r  r  u"   寮€濮嬪鐞?路 閫夋嫨淇濆瓨浣嶇疆)r?   r'  r?  u   鉁?AI 鏂囨。鍔╂墜z #7752d9r?   u+   鏂囨。鎬荤粨銆佸唴瀹归棶绛斻€佽嚜瀹氫箟 API)rt   r?  u   鎵撳紑 AI 鍔╂墜 鈫抍                  ?   >? T R                   R                  S5      $ r  )r?  ?selectr  s   €r-   r
+  r(  €  s   鴢 ????K?K華?Nr:   )r  r'  )3?grid_columnconfigure?grid_rowconfigurer   ?PanedWindowr	  ?horizontal_paner?  r?  r?  r?  ?vertical_paneri  r?  r?  r  r?  ?search_varr   r4  r?  ?trace_addr  r  ?card_holderr?  r   r<  ?Scrollbar?yview?tools_scrollr?  r   ?inner?create_windowrA  r.  ?bind_all?_wheelr2  r  r1  ?Radiobuttonr   ?op_labelr/  r6  ?_workflow?_select_toolr$  rs  r
+  )r?  rB   ?mainr  r?  r?  ?hero?bar?search?t?upload?options?val?descr?  r?  ?helpboxs   `                r-   r?  ?ModernApp._tools_uiJ  s?  鴢 ??#?#燗≦?#?/??H?H?蠷S?H?T?焇歗‵??蠺U衊a衜s?  BF?  G??????!?!燼╭?繟??!?M?廭奮楧?0?0?膄蠵Q衆]衚o?p??廥奨恉?*?*琤皊?;????? ? ?╟?? ?C繢譊X袲X譊\袲\衇a衘m衯}蠨\袲~?廻奾恡渞?"???????=?????榮???4癟稾盭竐菴蠿_癤?`????????1?2?廥奨恊渞?"???????B?
+????U訷[衉h?  oO?  WZ?  	[?  	`?  	`?  fi?  op?  	`?  	q?
+????  N?  RT?  X\?  b{?  CF?  	G?  	L?  	L?  RU?  [\?  bg?  	L?  	h?廐奌怳渂?!???????@???????弝妝??????C?荎罧蠻[衋f衜n繩袲o???恆??????!?!??H?I?6圓?廘塋???=?>?C?C?蠻V?C?W? 7???燯?+??―?<?<?A?A纕蠻Y衉`衒k?A?l???燚?4?4?蠶R?S???????8?8?蠸W譙d裇d譙j裇j?k??????#?#??D?D?H?H?#?I?????燝???5癲?G?G?L?L蠷X衈d衛p?L?q???楧?-?-??7????,?,?:?:????衂^?:?_?????????v?w?????榼?w?x????"?"?????>?????弡墈?? ???????B?
+???楿瑅?N?O?T?T衂`?T?a?
+????4??蠱m?n?s?s?u?
+????=??蠺l?m?r?r衳y?r?z???怴?.╰瘇﹡竏?C?H?H萩蠾Y衉e?H?f???楧?!???癈竀??D?
+???榥??蠬h衟s?t?y?y?  @C?  IK?  QW?y?  	X? N塇圕?????*圕???????L?廚奛?爀????9???蠽Y註b衒o?  }B?  TY?  _w?  
+x?  
+}?  
+}?  EH?  
+}?  
+I? N? 	
+????D?訯U衃s?t?y?y?  BE?  KM?  SY?y?  	Z???楾?"???癱竩??F?
+????6??蠷r衵}?~?  	D?  	D?  JM?  SU?  [a?  	D?  	b?梙抙榵╗糆腣蠶q衴|?}???  C?  L?  L?  Q?  Q?  WZ?  `b?  Q?  c?????C膗訮T衂r衵}?  GM?  Y\?  ]????????????5???怷?B???蠶U?V?[?[衋d衘l衦x?[?y???楧?!????癈??8?
+????3磚?蠴o衱z?{?  	A?  	A?  GJ?  PR?  X^?  	A?  	_?
+????K蘵訶\衎z?{?  	A?  	A?  IL?  RT?  	A?  	U???怶?3?N?O?T?T衂]衏e衚q?T?r???恥????????,?,?.?/????r:   c           
+      蟥  ?  U R                   R                  5       oR                  R                   5       nUS:?  a*  U R                   R	                  S[
+        SUS-
+  5      S5        US:?  a3  U R                  R	                  SS[
+        S[
+        US -  5      5      5        U R                  R                  S5        g ! [        R                    a     g f = f)	N镽  r   r  i"  i?  i  g吞烫烫?u:   灏辩华 路 鍙嫋鍔ㄥ伐浣滃尯涔嬮棿鐨勫垎闅旂嚎璋冩暣澶у皬)
+rN  ?winfo_widthrO  ?winfo_height?sash_placer'   rP   r]  r   r   ?TclError)r?  r?   r?   s      r-   r'  ?ModernApp._init_sashes?  s?   € ?	 ??"?"?.?.?0圓?E?E?R?R?T???媢怲?)?)?4?4癚磗?竡?箄硚繿?H??媢怲?'?'?2?2?癚磗?約?繱?粃?J?K?廗塊廜塐?X?Y弡墈???鷖   侭7B: ?C?Cc                 箨   ? U R                   R                  S5      S:X  aT  U R                  R                   5       (       a4  U R                  R	                  [
+        UR                  * S-
+  5      S5        g g g )Nr*   r   r?   ?units) r?  ?indexr<  ?winfo_exists?yview_scrollrP   ?delta)r?  r?  s     r-   rY  ?ModernApp._wheel?  sY   € ???????%爍?(═?>?>?K?K?M?M????*?*????▁?﹟?<竁?E? .N?(r:   c                 ?   ? Xl         U R                  5         g r^   )r?  r2  )r?  r?  s     r-   r4  ?ModernApp._set_filter?  s   € ??榯?1?1?3r:   c                 箐  ? XR                   :X  a  g U R                  R                  U5      nU(       d  g U(       a  SO[        nU(       a  SO[        nUS   R
+                  XES9  US   R
+                  US9  S  H  nX6   R
+                  US9  M  
+   U(       a  US   R
+                  [        S	9  g US   R
+                  S
+S	9  g ! [          a     MV  f = f! [          a     g f = f! [          a     g f = f)
+Nz #c9d5eaz #fbfdff?card)r  r?  rO  r?  )r   rf  ?arrowr{  )r?  ?#7f8da5)r?  r?  rs  r	  r   r?  r!   r  ) r?  r,  ?hovering?view?borderr?  r?  s           r-   ?_preview_card?ModernApp._preview_card?  s?   € ?
+?$?$?$??廮塤? ? ??$????&?現??"塝???圴??????A?圲??????$?+圕???#?#爎?#?*? ,? ?怶??'?'??'?2? 怶??'?'??'?5
+ ?!歍?! ?!橳?! ?!橳?!鷖6   ?C?C ?C" ?
+C?C?
+C?C?
+C/?C/c                  蟾  ? [        U S0 5      R                  5        H?  u  pXR                  :H  nU(       a  SO[        nU(       a  [        O[
+        nUS   R
+                  XE[        S9  US   R
+                  US9  US    R
+                  XC(       a  [        OSS	9  US
+   R
+                  XC(       a  S
+O[        S	9  US   R
+                  XC(       a  [        OS
+S	9  M?  
+   g )Nr?  z #f4f8ffrz  )r?  r  ?highlightcolorrO  r?  r   ?#152033)r?  r?  rf  z #4e5d75r{  r|  )?getattr?itemsr?  r   r  r	  r?  r  )r?  r,  r~  rH  r?  r  s         r-   ?_refresh_card_highlight?ModernApp._refresh_card_highlight?  s?   € ?榯燣??4?:?:?<塆圔??1?1?1圚?&?珽圔?'昖琕團??塋?"?"燽訳[?"?\??塊?!?!燫?!?(??塎?#?#爎?璮纈?#?P??塋?"?"燽?℡??"?M??塎?#?#爎?璮纈?#?P? =r:   c                 蟀  ^ ? [        T S5      (       d  g T R                  R                  5        H  oR                   5         M  
+   0 T l        T R
+                  R
+                  5       R                  5       R                  5       n[         Vs/ s H[  nT R                  S:X  d  US   T R                  :X  d  M(  U(       a*  X#S   S-   US   -   S-   US    -   R                  5       ;   d  MY  UPM]  
+   nn[        U5       GH  u  pSUu  pgp塸玔        US5      u  p蚑 R                  R                  U
+SS	S
+9  [        R                  " T R                  [         S ["        [$        S
+S9nUR'                  X蚐
+SSS S9  [        R                  " X闟SS9oR)                  SSSS9  UR+                  S5        [        R,                  " X鵘
+SSS9nUR)                  SS9  [        R                  " U[         S9nUR)                  SSSSS9  [        R,                  " UU [         S S!S"S#9nUR)                  S$S%9  [        R,                  " UU[         [.        S&S"S'SS(9nUR)                  S$S)S*9  [        R,                  " US+[         S,S-S9nUR)                  S.S/S09  UUUUUUUS1. T R                  U'   S U4U 4S2 jjnS U4U 4S3 jjnS U4U 4S4 jjnX颱UUUU/ nU H9  nUR1                  S5U5        UR1                  S6U5        UR1                  S7U5        M;  
+   GM	  
+   T R3                  5         U(       d8  [        R,                  " T R                  S8[         [.        S9S9R)                  S:S;9  g g s  snf )<NrV  r?  r?  rJ   ? r   r   r!  ?cards)r  ?uniformr@  )r?  r?  r  r?  rC  r?  r  )r?  r?  r?  r?  r?  r/  ?   )r?  r}   r~   r  )r?   r'  r?  )r  r?  r?  Fr?  )r?  r?  r?  r?  T)r?  r?  r?  r%  )r  rr   r?  r?  r?  r?  r?   r?  r?   r?  rD  rm   ) r?   r?  r?  rs   rt   r  r  )r?   r   r)  u   鈥簉|  )r?  rf   r   r'  r  ) rz  rO  r   rf  r{  r  ?iconc                 ?   >? TR                  U5        g r^   )r]  ?r?  ?or?  s     €r-   ?choose?ModernApp._render_cards.<locals>.choose?  s   鴢 燭?6?6皅?9r:   c                 ?   >? TR                  US5        g )NT?r€  r?  s     €r-   ?enter?ModernApp._render_cards.<locals>.enter?  s   鴢 燚?6?6皅??>r:   c                 ?   >? TR                  US5        g )NFr?  r?  s     €r-   ?leave?ModernApp._render_cards.<locals>.leave?  s   鴢 燚?6?6皅???r:   z
+<Button-1>z <Enter>z <Leave>u   鏈壘鍒板尮閰嶇殑宸ュ叿)r?  r'  ?   rC  )?hasattrrV  ?winfo_children?destroyr?  rP  rs  rK   r?  ?MODERN_TOOLSr?  rz   ?divmodrK  r   r?  r   r	  r  r?  r?  r?  r?  r  r.  r?  )r?  r?   r)  ?itr?  r>  r,  r   rf  r?  rH  ?groupr4  r?  rz  r  ?icon_labelrO  ?title_lbl?desc_lbl?arrow_lblr?  r?  r?  ?binderss   `                        r-   r2  ?ModernApp._render_cards?  sc  鴢 ?恡楪?$?$燰????*?*?,圓痀℡甗?,??????????%?%?'?-?-?/??(?  ]歀恇═?=?=竫?G?萢?蠷V識b裄b袺b媟謒n衦s衶|褁}?  B?  yB?  CE?  FG?  CH?  yH?  IL?  yL?  MO?  PQ?  MR?  yR?  xY?  xY?  x[?  s[弐橪??  ]?榚?$塂圓?-?*圔怲榰????ヽ╝?廕塉?+?+ˋ癚竪?+?G????????訵]詍s?  |C?  D圖?廔塈?‵?竡纐圛?I????╞??;圖縄笽?蠾^衐f窱?g衕l議{裩{?  }B?  iC?梮抶???蠬[?\圝?廜塐?圤?(??????'圕???癴?蠵T衂\??]?梙抙榮???蠭i衠t?u圛?廚塏?圢?$?梄扻榗爐瑄?蠦Z衎e衠t?  ~D?  E圚?廙塎榮?圡?.?梙抙榯?????W圛?廚塏?≧圢?0?,?竬蠵X衋j衦v?  I?  !J圖廜塐楤????9?榬?>?榬???榮?╥???K圙?????恷燜?+???恲??'???恲??'? ? %? 	
+?$?$?&?擱梄扻榙焜檍?H蘀訳Y衉x?y?~?~?  EG?~?  H坲5 ]s   ?'M?-M?Mc           
+      驦  ^ ? T R                  U5      o"R                  SSSSS9  [        R                  " US[        S SS	9R                  S
+S
+SS
+9  [        R
+                  " U[        S9o3R                  SSSSS9  [        R                  " USSSSSSS[        SS9
+T l        T R                  R                  SSSSS9  T R                  R                  ST R                  5        [        R
+                  " U[        S9oDR                  SS9  SU 4S  j4S!U 4S" j4S#T R                  4S$T R                  44 H%  u  pVT R                  XEU5      R                  S%S&S'9  M'  
+   [        R
+                  " U[        S9owR                  S%S(S)S*9  [        R                  " U S+[        [        S,S	9R                  SSS
+S-9  [         R"                  " U T R$                  S.S/9R                  SSS0S1S29  [        R                  " U S3[        [        S,S	9R                  SS&S
+S-9  [         R"                  " U T R&                  S.S/9R                  SSS0S4S29  U R)                  SSS59  U R)                  SSS59  [        R                  " US6[        [        S7SS
+S,S89T l        T R*                  R                  S%S
+S9S*9  g ):Nr?  Tr!  )r   r!  r?  u   澶勭悊宸ヤ綔鍖簔 #16213ar?  r?  r?   r?  )r?   r!  rG  r?  r'  r?   r?  ?singlez #f9fbffz #223044r?  r   rJ   ?none)	r~   ?selectmoder?  r?  rs   r  r?  r  ?activestyler  r,  )r  rr   r?  r?  z<<ListboxSelect>>r  u   涓婄Щc                  ?   >? T R                  S5      $ r  ??_reorderr  s   €r-   r
+  ?ModernApp._workflow.<locals>.<lambda>?  s   鴢 ╠痬﹎窧??r:   u   涓嬬Щc                  ?   >? T R                  S5      $ r  r?  r  s   €r-   r
+  r?  ?  s   鴢 蠷V識_裄_衊a訰br:   u   鍒犻櫎r  r?   r   r)  r?  )r?   r  r+  r"  rD  )r?  r?  r?  r?  r.  r   )r  r?  r
+  u   姘村嵃 / 瀵嗙爜 / 瑙掑害)r  r   r   r   rj  ) r?   r?  r?  r  r  rt   rs   )r   r'  )r  r?  r   r?  r   r?  ?Listboxr	  ?files_listr.  ?_on_selection?_remove_selectedr2  r  r  r?  r   r4  r'  r(  rK  r5  )r?  rB   ?blockr?  ?actionsrO  ?callback?forms   `       r-   r\  ?ModernApp._workflow?  s?  鴢 ?弅塳??!??????蠶V??W?
+????-??蠭i?j?o?o衱z?  AC?  IO?o?  	P?廐奌怳渆?$????蠸T燲?U????╝?纘蠺]衏|?  AB?  VW?  lr?  E?  F????????╢窪纅??M萪蟧蒾譔b袾b衏v衱{?  xJ?  xJ?  OK??????&??爘?@?&???@?訩b蠥c衑m衝r?  oD?  oD?  eE?  GO?  PT?  P`?  P`?  Fa?  b塋圕?廘塋?燲?.?3?3???3?D? b?廥奨恊渦?%?癝竍纄爄?L?
+????,??蠧[?\?a?a衒g衞p衳{?a?|?
+???燚??<?A?A繿萹蠿\衎h?A?i?
+????5??蠰d?e?j?j衞p衳y?  BE?j?  	F?
+???燚癛?8?=?=??蠺X衈c?=?d??!?!???!?-╠?G?G?蠶R?G?S????燽珽碩繱蠶W衉b?  iA?  B???????楥燫╒??4r:   c                 ?  ^? U R                   R                  T5        TU l        [         U4S j[         5       T5      nU R
+                  R
+                  US9  U R                  R                  SU-   S-   5        U R                  5         U R                  5         g )Nc              3   驜   >#   ? U  H  oS    T:X  d  M
+  US   v ?  M  
+   g7f)r   rJ   Nr9   )ra   r?   r$  s     €r-   rc   ?ModernApp._select_tool.<locals>.<genexpr>?  s    € ?B?楺癆???揇怉恆朌?鵵|  r?  u   宸查€夋嫨宸ュ叿锛歶:    路 鍗＄墖宸查珮浜紝鍙户缁坊鍔犳枃浠跺苟寮€濮嬪鐞?
+r$  r   r?  ry   r?  r[  r<  r]  r?  r
+  )r?  r$  r   s    ` r-   r]  ?ModernApp._select_tool?  su   鴢 ???????%?%????B??B??M?????????(??????,║?2?o?o?p??$?$?&????r:   c           
+      螽   ? U R                   R                  5       nSSSSSSS SS	S
+S
+SS
+.nU R                  R                   SUR                  US5      -   S9  g )Nu;   鍩虹鐗堬細鏂囧瓧鎻愬彇涓?Word锛屼笉淇濈暀澶嶆潅鎺掔増銆倁<   鍩虹鐗堬細鎸夋枃鏈瀵煎嚭锛屽苟闈炶〃鏍肩粨鏋勮瘑鍒€倁=   姣忛〉浠ュ浘鐗囧姞鍏?PPT锛岄〉闈㈠唴瀹逛笉鍙€愰」缂栬緫銆倁?   鍥惧儚妯″紡灏嗘爡鏍煎寲椤甸潰锛屽彲鑳戒涪澶辨枃鏈彲閫夋€с€倁0   鏃犳崯浼樺寲涓嶄繚璇佹枃浠跺ぇ灏忎竴瀹氬噺灏忋€倁-   闇€瑕佸湪鐢佃剳涓婂彟澶栧畨瑁?LibreOffice銆倁<   鍦ㄣ€岄〉鐮?/ 椤哄簭銆嶈緭鍏ユ柊鐨勯〉搴忥紝渚嬪 3,1,2銆倁9   鐣欑┖鎷嗗垎鍏ㄩ儴椤甸潰锛涜緭鍏?1,3,5-8 鎸囧畾鑼冨洿銆倁B   璇峰湪銆屾按鍗?/ 瀵嗙爜 / 瑙掑害銆嶅～鍐欎腑鏂囨垨鑻辨枃姘村嵃銆倁'   鍙緭鍏?90銆?80銆?70锛岄粯璁?90銆倁3   鍦ㄣ€屾按鍗?/ 瀵嗙爜 / 瑙掑害銆嶅～鍐欐柊瀵嗙爜銆倁   璇疯緭鍏ョ幇鏈夊瘑鐮併€?r?   r?   r?   r?   r?   r?   r?   r?   r?   r?   r?   r?   u
+   鎻愮ず 路 ui   閫夋嫨鏂囦欢锛屽繀瑕佹椂璋冩暣椤甸潰鑼冨洿鎴栭檮鍔犺緭鍏ワ紝鐐瑰嚮鍙充晶鎸夐挳鍗冲彲閫夋嫨淇濆瓨浣嶇疆銆俽?  r;  )r?  r,  ?tipss      r-   r
+  ?ModernApp._hint?  s?   € ????????Z?  lj?  yx?f?  As?  Cr?_?  zu?e?  t]?  k`?  nH?I?? 	
+????榣???癇?  8c?  ,d?  d??  	er:   c                 骽   ? U R                   R                  5       o"(       a
+  US   U l        g S U l        g ?Nr   )r?  ?curselectionr?  )r?  r?  r5  s      r-   r?  ?ModernApp._on_selection?  s(   € ????&?&?(???窺???:???:r:   c                 驢  ? U R                   nUc  g X!-   nSUs=::  a  [        U R                  5      :  an  O  g U R                  U   U R                  U   sU R                  U'   U R                  U'   U R                   5         U R                  R
+                  U5        X0l         g g r?  )r?  r|   r5  rN  r?  ?selection_set)r?  ru  rB  ?dsts       r-   r?  ?ModernApp._reorder?  s?   € ??????恦?塈??坈?!?恉梛慾??!?0疛㎎皊㎡窪縅笿纒筄?+圖廕塉恠塐楧烰橨爏橭菵譒_袻_訪a?廜塐?)?)??.??@? "r:   c                 竽   ? U R                   bS  U R                   [        U R                  5      :  a/  U R                  U R                   	 S U l         U R                   5         g g g r^   )r?  r|   r5  rN  r  s    r-   r?  ?ModernApp._remove_selected?  sP   € ????(═?>?>約?????N?????,?,?-?╠??繲譋X袳X誆Z? .O?(r:   c           	      ?  ? [        U S5      (       d  g U R                  R                  SS5        [         U R                  5       H=  u  pU R                  R
+                  SUS-   S S[
+        U5      R                   35        M?  
+   U R                  R                  U R                  (       a  S [        U R                  5       S3OS	S
+9  [        U S
+5      (       a3  U R                  R                  S[        U R                  5       S35        g g )
+Nr?  r   r?  rJ   ?02dz   u
+   宸叉坊鍔?rY  rH  r?  r]  u   鏂囦欢鍒楄〃宸叉洿鏂帮細)
+r?  r?  r?  rz   r5  r?  r   rW  r/  r<  r|   r]  r   )r?  r?   r.  s      r-   rN  ?ModernApp._refresh_files   s?   € ?恡楲?)?)??????榪??'?楾焃橺?(塁圓???????????萐?蠶T訳Y衂[覷\譛a裊a蠺b蠪c?d?(?????蠵T譖Z譖Z爅?癟穁盳??A??L衊t??u????!?!??????L蘏蠶U譗[裃[薩蠰]衇g?h?i?!r:   c           
+      鬆   ? [         R                  " SS9U l        [         R                  " X R                  S[        SSSS S9R
+                  S	S
+9  g )
+NuF   灏辩华  路  鏈湴澶勭悊鏂囦欢锛孉I 鍒嗘瀽鏃堕渶鑷閫夋嫨鍙俊 APIr?  r  r?  r?   r?  r  r\  r?   r?  )r   r?  r]  r?  r  r?  r  s    r-   r?  ?ModernApp._footer  sY   € ?桳扡?o?p???
+??????紇蠯k衧v衸~?  EF?  	G?  	L?  	L?  RU?  	L?  	Vr:   )r?  rA  rR  r?  r/  r?  r?  r5  rN  rV  r[  r?  rP  r?  r]  r?  r<  rU  rO  )r?   r?   )Fr^   )r?  r?  r?  r?  r?  r?  r?  r?  r  r  r?  r'  rY  r4  r€  r?  r2  r\  r]  r
+  r?  r?  r?  rN  r?  r?  r?  r?  s   @r-   r?  r?    s   鴨 ?O? +?9?4??Q?9騰 ?F?4?"?	Q?H駼5? ?e?O?E?[?j?V? Vr:   r?  ?__main__r^   )r   r   )r?  )@?__doc__?osr   r4   r?   rN   r?   r?   r?   rs  r?   ?urllib.requestru  ?urllib.errorr  r   ?pathlibr   r   ?tkinterr   r   r   r    r?   ?PILr   r	   r
+   r?  r?  r?  ?getenvr?   r?  r6   rr  r3   r3  r?  r?  r?  r?  r.   r;   rG   r[   r?   rJ  r,  rb  r?  ?Tkr?  r   r?  r	  r  r  ?GREENr?  r?  r?  ?mainloopr9   r:   r-   ?<module>r?     s0  ?? >? z? z? z? z? z? z? z? ? ? ? /? /? 
+? +? +? ? €?€ ?
+坆廼奿??爐?3?4?5?J?J萠?\€??4窷蠺\衖k衯z?{€?U? €€c??????U??I?L騘	c€?R?4?`o???? `o餒   €怚?爄榲癷???衁b蠸X?^€?kV?? kV餤  圸??
+僈???? r:   
