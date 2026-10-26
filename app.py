@@ -441,5 +441,200 @@ class App(tk.Tk):
         except keyring.errors.PasswordDeleteError:pass
         self.key.set('');messagebox.showinfo('清除完成','已尝试清除 Windows 凭据中的 API Key。')
 
+
+# ================ oycy Modern UI / soft Bauhaus ================
+WHITE='#ffffff'; BG='#f5f7fb'; BORDER='#e5e9f0'; SOFT='#677488'; ACCENT='#1768ee'; GREEN='#2bbd86'
+MODERN_TOOLS=[
+ ('合并 PDF','合并PDF','将多个 PDF 合并为一个文件','↔','#ff5258','全部'),
+ ('PDF 拆分（逐页）','分割PDF','按页码拆分并下载 ZIP','✂','#4388fa','全部'),
+ ('压缩 PDF（无损）','无损压缩','优化文件结构，保留可选文字','⇣','#30bb85','全部'),
+ ('PDF 转 Word','PDF转Word','提取文字为 DOCX（基础版）','W','#4585ee','转换'),
+ ('PDF 转 PPT','PDF转PPT','每页转换为图片幻灯片','P','#ff8040','转换'),
+ ('PDF 转 Excel','PDF转Excel','提取文本至电子表格','X','#32bf82','转换'),
+ ('PDF 转图片','PDF转JPG','多页高清 JPG 打包 ZIP','▧','#ff8553','转换'),
+ ('图片转 PDF','图片转PDF','将多张图片合并为 PDF','▣','#f95871','转换'),
+ ('旋转 PDF','旋转PDF','批量旋转 PDF 页面','↻','#8a6cf5','页面'),
+ ('添加页码','添加页码','为每页加入页码','12','#f5c33e','页面'),
+ ('添加文字水印','文字水印','可输入中文水印文字','◈','#4c8bf8','页面'),
+ ('重新排列页面','组织PDF','指定新页码顺序','▤','#8a93aa','页面'),
+ ('提取页面','提取页面','选择需要保留的页面','▥','#446df1','页面'),
+ ('删除页面','删除页面','移除指定 PDF 页面','−','#ee7778','页面'),
+ ('PDF 加密','保护PDF','添加文件打开密码','♙','#ed5f88','安全'),
+ ('解锁 PDF','解锁PDF','使用原密码解除保护','♧','#62baf6','安全'),
+ ('PDF 转文本','PDF转文本','提取可选择的文本','T','#6d78ea','转换'),
+ ('压缩 PDF（图像）','图像压缩','重绘页面以减小文件体积','▾','#27bca8','全部'),
+ ('提取图片','提取图片','导出嵌入的所有图片','▧','#ff9564','转换'),
+ ('Word 转 PDF','Word转PDF','需另装 LibreOffice','W','#518bdb','转换'),
+ ('删除 PDF 元数据','清理元数据','删除文档元数据','◇','#7e8ca9','安全')]
+
+class ModernApp(App):
+    def __init__(self):
+        self.filter_name='全部';self.search_text='';self.selected_idx=None
+        super().__init__()
+        self.title('oycy的PDF工具箱  ·  Desktop')
+        self.geometry('1350x835');self.minsize(1040,680);self.configure(bg=BG)
+
+    def _style(self):
+        s=ttk.Style(self);s.theme_use('clam')
+        s.configure('TNotebook',background=BG,borderwidth=0)
+        s.configure('TNotebook.Tab',font=('Microsoft YaHei UI',11,'bold'),padding=(20,12),background=BG,foreground=SOFT,borderwidth=0)
+        s.map('TNotebook.Tab',background=[('selected',WHITE)],foreground=[('selected',ACCENT)])
+        s.configure('TFrame',background=BG)
+        s.configure('TEntry',padding=9,font=('Microsoft YaHei UI',10))
+        s.configure('TCombobox',padding=7)
+
+    def _header(self):
+        top=tk.Frame(self,bg=WHITE,height=68);top.pack(fill='x');top.pack_propagate(False)
+        tk.Label(top,text='●',bg=WHITE,fg='#ff514b',font=('Arial',23)).pack(side='left',padx=(25,9))
+        tk.Label(top,text='oycy的PDF工具箱',bg=WHITE,fg='#161c27',font=('Microsoft YaHei UI',18,'bold')).pack(side='left')
+        tk.Label(top,text='  BAUHAUS / LOCAL  ',bg='#eaf2ff',fg=ACCENT,font=('Arial',9,'bold'),padx=8,pady=6).pack(side='left',padx=16)
+        tk.Label(top,text='PDF · 文档转换 · AI',bg=WHITE,fg=SOFT,font=('Microsoft YaHei UI',10)).pack(side='right',padx=28)
+        tk.Frame(self,bg=BORDER,height=1).pack(fill='x')
+
+    def _tabs(self):
+        tabs=ttk.Notebook(self);tabs.pack(fill='both',expand=True,padx=16,pady=(8,4))
+        home=ttk.Frame(tabs);ai=ttk.Frame(tabs);settings=ttk.Frame(tabs)
+        tabs.add(home,text='  全部 PDF 工具  ');tabs.add(ai,text='  ✦ AI 文档助手  ');tabs.add(settings,text='  ⚙ API 与设置  ')
+        self.tabs=tabs
+        self._tools_ui(home)
+        self._ai_ui(ai);self._settings_ui(settings)
+
+    def _panel(self,parent,padx=14,pady=14):
+        f=tk.Frame(parent,bg=WHITE,highlightbackground=BORDER,highlightthickness=1)
+        return f
+
+    def _button(self,parent,text,cmd,primary=False):
+        return tk.Button(parent,text=text,command=cmd,bg=ACCENT if primary else WHITE,
+            fg=WHITE if primary else '#263246',activebackground='#105bd4' if primary else '#eaf2ff',
+            activeforeground=WHITE if primary else ACCENT,relief='flat',bd=0,
+            highlightthickness=1,highlightbackground=ACCENT if primary else BORDER,
+            font=('Microsoft YaHei UI',10,'bold'),cursor='hand2',padx=13,pady=9)
+
+    def _tools_ui(self,parent):
+        parent.grid_columnconfigure(0,weight=1);parent.grid_rowconfigure(0,weight=1)
+        main=tk.Frame(parent,bg=BG);main.grid(row=0,column=0,sticky='nsew',padx=(2,12))
+        side=tk.Frame(parent,bg=BG,width=280);side.grid(row=0,column=1,sticky='ns',padx=(0,4));side.grid_propagate(False)
+        hero=tk.Frame(main,bg=BG);hero.pack(fill='x',pady=(10,6))
+        tk.Label(hero,text='所有处理 PDF 所需的工具都集中在一个地方',bg=BG,fg='#141b27',font=('Microsoft YaHei UI',21,'bold'),anchor='w').pack(fill='x',padx=6)
+        tk.Label(hero,text='简单易用  ·  本地处理  ·  安全高效    选择工具后添加文件，设置参数并导出结果。',bg=BG,fg=SOFT,font=('Microsoft YaHei UI',10),anchor='w').pack(fill='x',padx=8,pady=(6,6))
+        bar=tk.Frame(main,bg=BG);bar.pack(fill='x',pady=(4,12))
+        self.search_var=tk.StringVar()
+        search=ttk.Entry(bar,textvariable=self.search_var,width=26);search.pack(side='left',padx=(5,8),ipady=4)
+        search.insert(0,'')
+        self.search_var.trace_add('write',lambda *a:self._render_cards())
+        for t in ('全部','转换','页面','安全'):
+            self._button(bar,t,lambda v=t:self._set_filter(v)).pack(side='left',padx=3)
+        self.card_holder=self._panel(main);self.card_holder.pack(fill='both',expand=True,padx=3,pady=(0,8))
+        # scrollable tool cards
+        self.tools_canvas=tk.Canvas(self.card_holder,bg=WHITE,highlightthickness=0)
+        self.tools_scroll=ttk.Scrollbar(self.card_holder,orient='vertical',command=self.tools_canvas.yview)
+        self.tools_canvas.configure(yscrollcommand=self.tools_scroll.set)
+        self.tools_scroll.pack(side='right',fill='y');self.tools_canvas.pack(side='left',fill='both',expand=True)
+        self.inner=tk.Frame(self.tools_canvas,bg=WHITE)
+        self.canvas_window=self.tools_canvas.create_window((0,0),window=self.inner,anchor='nw')
+        self.inner.bind('<Configure>',lambda e:self.tools_canvas.configure(scrollregion=self.tools_canvas.bbox('all')))
+        self.tools_canvas.bind('<Configure>',lambda e:self.tools_canvas.itemconfigure(self.canvas_window,width=e.width))
+        self.tools_canvas.bind_all('<MouseWheel>',self._wheel)
+        self._render_cards()
+        upload=self._panel(side);upload.pack(fill='x',pady=(4,10))
+        tk.Label(upload,text='☁',bg=WHITE,fg=ACCENT,font=('Arial',27,'bold')).pack(pady=(13,2))
+        tk.Label(upload,text='添加待处理文件',bg=WHITE,fg=ACCENT,font=('Microsoft YaHei UI',12,'bold')).pack()
+        tk.Label(upload,text='支持一次选择多个文件',bg=WHITE,fg=SOFT,font=('Microsoft YaHei UI',9)).pack(pady=5)
+        self._button(upload,'＋ 选择文件',self.add_files,True).pack(fill='x',padx=17,pady=(9,16))
+        options=self._panel(side);options.pack(fill='x',pady=(0,10))
+        tk.Label(options,text='输出质量',bg=WHITE,fg='#17243a',font=('Microsoft YaHei UI',12,'bold'),anchor='w').pack(fill='x',padx=16,pady=(15,7))
+        for val,desc in (('轻量','体积优先'),('标准','质量与体积平衡'),('高清','清晰度优先'),('超清','细节优先')):
+            row=tk.Frame(options,bg=WHITE);row.pack(fill='x',padx=12,pady=1)
+            tk.Radiobutton(row,text=f'{val}    · {desc}',variable=self.quality,value=val,bg=WHITE,fg='#344057',selectcolor=WHITE,activebackground=WHITE,font=('Microsoft YaHei UI',9)).pack(anchor='w')
+        tk.Label(options,text='部分无损操作不会改变画质',bg=WHITE,fg=SOFT,font=('Microsoft YaHei UI',8)).pack(anchor='w',padx=17,pady=(6,14))
+        settings=self._panel(side);settings.pack(fill='x',pady=(0,10))
+        tk.Label(settings,text='当前工具 / 输出',bg=WHITE,fg='#17243a',font=('Microsoft YaHei UI',11,'bold'),anchor='w').pack(fill='x',padx=15,pady=(12,5))
+        self.op_label=tk.Label(settings,text='合并PDF',bg=WHITE,fg=ACCENT,font=('Microsoft YaHei UI',12,'bold'),anchor='w');self.op_label.pack(fill='x',padx=15)
+        self.file_label=tk.Label(settings,text='尚未添加文件',bg=WHITE,fg=SOFT,font=('Microsoft YaHei UI',9),anchor='w',justify='left',wraplength=230)
+        self.file_label.pack(fill='x',padx=15,pady=7)
+        self._button(settings,'开始处理 · 选择保存位置',self.run_tool,True).pack(fill='x',padx=12,pady=(6,12))
+        helpbox=self._panel(side);helpbox.pack(fill='x')
+        tk.Label(helpbox,text='✦ AI 文档助手',bg=WHITE,fg='#7752d9',font=('Microsoft YaHei UI',11,'bold'),anchor='w').pack(fill='x',padx=14,pady=(12,5))
+        tk.Label(helpbox,text='文档总结、内容问答、自定义 API',bg=WHITE,fg=SOFT,font=('Microsoft YaHei UI',9)).pack(anchor='w',padx=14)
+        self._button(helpbox,'打开 AI 助手 →',lambda:self.tabs.select(1)).pack(fill='x',padx=12,pady=(8,12))
+        self._workflow(main)
+        self._hint()
+
+    def _wheel(self,e):
+        if self.tabs.index('current')==0 and self.tools_canvas.winfo_exists():
+            self.tools_canvas.yview_scroll(int(-e.delta/120),'units')
+    def _set_filter(self,value):
+        self.filter_name=value;self._render_cards()
+    def _render_cards(self):
+        if not hasattr(self,'inner'):return
+        for w in self.inner.winfo_children():w.destroy()
+        q=self.search_var.get().strip().lower()
+        items=[it for it in MODERN_TOOLS if (self.filter_name=='全部' or it[5]==self.filter_name) and (not q or q in (it[1]+' '+it[0]+' '+it[2]).lower())]
+        for j,it in enumerate(items):
+            op,title,desc,icon,color,group=it;r,c=divmod(j,3)
+            self.inner.grid_columnconfigure(c,weight=1,uniform='cards')
+            card=tk.Frame(self.inner,bg=WHITE,highlightthickness=1,highlightbackground=BORDER,cursor='hand2')
+            card.grid(row=r,column=c,sticky='nsew',padx=8,pady=8)
+            left=tk.Frame(card,bg=color,width=48,height=48);left.pack(side='left',padx=(14,12),pady=16);left.pack_propagate(False)
+            tk.Label(left,text=icon,bg=color,fg='white',font=('Arial',19,'bold')).pack(expand=True)
+            txt=tk.Frame(card,bg=WHITE);txt.pack(side='left',fill='both',expand=True,pady=13)
+            tk.Label(txt,text=title,bg=WHITE,fg='#152033',font=('Microsoft YaHei UI',11,'bold'),anchor='w').pack(fill='x')
+            tk.Label(txt,text=desc,bg=WHITE,fg=SOFT,font=('Microsoft YaHei UI',8),anchor='w',wraplength=190,justify='left').pack(fill='x',pady=(4,0))
+            tk.Label(card,text='›',bg=WHITE,fg='#7f8da5',font=('Arial',23)).pack(side='right',padx=12)
+            def choose(e=None,o=op):self._select_tool(o)
+            for w in [card,left,txt]+left.winfo_children()+txt.winfo_children():w.bind('<Button-1>',choose)
+        if not items:tk.Label(self.inner,text='未找到匹配的工具',bg=WHITE,fg=SOFT,font=('Microsoft YaHei UI',12)).pack(pady=45)
+
+    def _workflow(self,parent):
+        block=self._panel(parent);block.pack(fill='x',padx=3,pady=(0,3))
+        tk.Label(block,text='处理工作区',bg=WHITE,fg='#16213a',font=('Microsoft YaHei UI',12,'bold')).pack(anchor='w',padx=16,pady=(10,3))
+        row=tk.Frame(block,bg=WHITE);row.pack(fill='x',padx=12,pady=4)
+        self.files_list=tk.Listbox(row,height=4,selectmode='single',bg='#f9fbff',fg='#223044',font=('Microsoft YaHei UI',10),bd=0,highlightthickness=1,highlightbackground=BORDER,activestyle='none')
+        self.files_list.pack(side='left',fill='both',expand=True,padx=(4,12));self.files_list.bind('<<ListboxSelect>>',self._on_selection)
+        actions=tk.Frame(row,bg=WHITE);actions.pack(side='left')
+        for txt,callback in (('上移',lambda:self._reorder(-1)),('下移',lambda:self._reorder(1)),('删除',self._remove_selected),('清空',self.clear_files)):
+            self._button(actions,txt,callback).pack(fill='x',pady=2)
+        form=tk.Frame(block,bg=WHITE);form.pack(fill='x',padx=17,pady=(6,9))
+        tk.Label(form,text='页码 / 顺序',bg=WHITE,fg=SOFT,font=('Microsoft YaHei UI',9)).grid(row=0,column=0,sticky='w')
+        ttk.Entry(form,textvariable=self.page_spec,width=22).grid(row=0,column=1,sticky='ew',padx=(8,18))
+        tk.Label(form,text='水印 / 密码 / 角度',bg=WHITE,fg=SOFT,font=('Microsoft YaHei UI',9)).grid(row=0,column=2,sticky='w')
+        ttk.Entry(form,textvariable=self.extra,width=22).grid(row=0,column=3,sticky='ew',padx=(8,0))
+        form.grid_columnconfigure(1,weight=1);form.grid_columnconfigure(3,weight=1)
+        self.hint=tk.Label(block,text='',bg=WHITE,fg=SOFT,wraplength=850,justify='left',anchor='w',font=('Microsoft YaHei UI',9))
+        self.hint.pack(fill='x',padx=16,pady=(0,12))
+
+    def _select_tool(self,operation):
+        self.operation.set(operation)
+        title=next((x[1] for x in MODERN_TOOLS if x[0]==operation),operation)
+        self.op_label.config(text=title)
+        self._hint()
+    def _hint(self):
+        op=self.operation.get()
+        tips={'PDF 转 Word':'基础版：文字提取为 Word，不保留复杂排版。','PDF 转 Excel':'基础版：按文本行导出，并非表格结构识别。','PDF 转 PPT':'每页以图片加入 PPT，页面内容不可逐项编辑。',
+            '压缩 PDF（图像）':'图像模式将栅格化页面，可能丢失文本可选性。','压缩 PDF（无损）':'无损优化不保证文件大小一定减小。','Word 转 PDF':'需要在电脑上另外安装 LibreOffice。',
+            '重新排列页面':'在「页码 / 顺序」输入新的页序，例如 3,1,2。','PDF 拆分（逐页）':'留空拆分全部页面；输入 1,3,5-8 指定范围。',
+            '添加文字水印':'请在「水印 / 密码 / 角度」填写中文或英文水印。','旋转 PDF':'可输入 90、180、270，默认 90。','PDF 加密':'在「水印 / 密码 / 角度」填写新密码。','解锁 PDF':'请输入现有密码。'}
+        self.hint.config(text='提示 · '+tips.get(op,'选择文件，必要时调整页面范围或附加输入，点击右侧按钮即可选择保存位置。'))
+    def _on_selection(self,e=None):
+        v=self.files_list.curselection();self.selected_idx=v[0] if v else None
+    def _reorder(self,delta):
+        idx=self.selected_idx
+        if idx is None:return
+        dst=idx+delta
+        if 0<=dst<len(self.files):
+            self.files[idx],self.files[dst]=self.files[dst],self.files[idx];self._refresh_files()
+            self.files_list.selection_set(dst);self.selected_idx=dst
+    def _remove_selected(self):
+        if self.selected_idx is not None and self.selected_idx<len(self.files):
+            del self.files[self.selected_idx];self.selected_idx=None;self._refresh_files()
+    def _refresh_files(self):
+        if not hasattr(self,'files_list'):return
+        self.files_list.delete(0,'end')
+        for i,f in enumerate(self.files):self.files_list.insert('end',f'{i+1:02d}   {Path(f).name}')
+        self.file_label.config(text=f'已添加 {len(self.files)} 个文件' if self.files else '尚未添加文件')
+    def _footer(self):
+        self.status=tk.StringVar(value='就绪  ·  本地处理文件，AI 分析时需自行选择可信 API')
+        tk.Label(self,textvariable=self.status,bg='#eaf2ff',fg=ACCENT,font=('Microsoft YaHei UI',9),anchor='w',padx=17,pady=8).pack(fill='x')
+
 if __name__=='__main__':
-    App().mainloop()
+    ModernApp().mainloop()
