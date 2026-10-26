@@ -1,5 +1,5 @@
 """oycy PDF 工具箱：Windows 离线桌面版，Tk GUI。"""
-import os, sys, json, io, re, glob, shutil, tempfile, threading, subprocess, urllib.request, urllib.error, zipfile
+import os, sys, json, io, re, glob, shutil, tempfile, threading, subprocess, urllib.request, urllib.error, zipfile, ctypes
 from pathlib import Path
 from datetime import datetime
 import tkinter as tk
@@ -13,6 +13,33 @@ SERVICE = 'oycy-pdf-ai'
 CONFIG = Path(os.getenv('APPDATA', str(Path.home()))) / 'oycy-PDF-Toolbox' / 'settings.json'
 DEFAULTS = dict(api_base='https://api.openai.com/v1', model='gpt-4.1-mini', quality='标准', output_dir='', remember=True)
 BLUE, RED, YELLOW, INK, PAPER = '#214ccf', '#e5412d', '#f2c33e', '#141414', '#fffaf0'
+
+
+def enable_high_dpi(root=None):
+    """Enable sharper rendering on Windows and set a sensible Tk scaling."""
+    if sys.platform.startswith('win'):
+        try:
+            ctypes.windll.shcore.SetProcessDpiAwareness(2)
+        except Exception:
+            try:
+                ctypes.windll.user32.SetProcessDPIAware()
+            except Exception:
+                pass
+    if root is not None:
+        try:
+            current = float(root.tk.call('tk', 'scaling'))
+        except Exception:
+            current = 1.0
+        try:
+            px_per_inch = root.winfo_fpixels('1i')
+            recommended = max(1.35, min(2.0, px_per_inch / 72.0))
+        except Exception:
+            recommended = 1.35
+        if current < recommended:
+            try:
+                root.tk.call('tk', 'scaling', recommended)
+            except Exception:
+                pass
 
 
 def load_cfg():
@@ -261,8 +288,8 @@ def chat_request(base,model,key,messages,timeout=45):
 
 class App(tk.Tk):
     def __init__(self):
-        super().__init__();self.title(APP_NAME+' · WINDOWS EDITION')
-        self.geometry('1080x750');self.minsize(860,620);self.configure(bg=PAPER)
+        super().__init__();enable_high_dpi(self);self.title(APP_NAME+' · WINDOWS EDITION')
+        self.geometry('1220x820');self.minsize(940,700);self.configure(bg=PAPER)
         self.cfg=load_cfg();self.files=[];self.busy=False
         self.operation=tk.StringVar(value='合并 PDF');self.quality=tk.StringVar(value=self.cfg['quality'])
         self.page_spec=tk.StringVar();self.extra=tk.StringVar();self.output=tk.StringVar(value=self.cfg['output_dir'])
@@ -514,17 +541,19 @@ MODERN_TOOLS=[
 class ModernApp(App):
     def __init__(self):
         self.filter_name='全部';self.search_text='';self.selected_idx=None
+        self.card_views={}
+        self.active_card_op=None
         super().__init__()
         self.title('oycy的PDF工具箱  ·  Desktop')
-        self.geometry('1350x835');self.minsize(1040,680);self.configure(bg=BG)
+        self.geometry('1500x920');self.minsize(1180,760);self.configure(bg=BG)
 
     def _style(self):
         s=ttk.Style(self);s.theme_use('clam')
         s.configure('TNotebook',background=BG,borderwidth=0)
-        s.configure('TNotebook.Tab',font=('Microsoft YaHei UI',11,'bold'),padding=(20,12),background=BG,foreground=SOFT,borderwidth=0)
+        s.configure('TNotebook.Tab',font=('Microsoft YaHei UI',12,'bold'),padding=(22,13),background=BG,foreground=SOFT,borderwidth=0)
         s.map('TNotebook.Tab',background=[('selected',WHITE)],foreground=[('selected',ACCENT)])
         s.configure('TFrame',background=BG)
-        s.configure('TEntry',padding=9,font=('Microsoft YaHei UI',10))
+        s.configure('TEntry',padding=10,font=('Microsoft YaHei UI',11))
         s.configure('TCombobox',padding=7)
 
     def _header(self):
@@ -610,6 +639,7 @@ class ModernApp(App):
         tk.Label(helpbox,text='文档总结、内容问答、自定义 API',bg=WHITE,fg=SOFT,font=('Microsoft YaHei UI',9)).pack(anchor='w',padx=14)
         self._button(helpbox,'打开 AI 助手 →',lambda:self.tabs.select(1)).pack(fill='x',padx=12,pady=(8,12))
         self._workflow(lower)
+        self._select_tool(self.operation.get())
         self._hint()
 
     def _init_sashes(self):
@@ -625,31 +655,76 @@ class ModernApp(App):
             self.tools_canvas.yview_scroll(int(-e.delta/120),'units')
     def _set_filter(self,value):
         self.filter_name=value;self._render_cards()
+
+    def _preview_card(self, op, hovering):
+        if op == self.active_card_op:
+            return
+        view=self.card_views.get(op)
+        if not view:
+            return
+        border = '#c9d5ea' if hovering else BORDER
+        bg = '#fbfdff' if hovering else WHITE
+        view['card'].configure(highlightbackground=border, bg=bg)
+        view['txt'].configure(bg=bg)
+        for key in ('title','desc','arrow'):
+            try:view[key].configure(bg=bg)
+            except Exception:pass
+        if hovering:
+            try:view['arrow'].configure(fg=ACCENT)
+            except Exception:pass
+        else:
+            try:view['arrow'].configure(fg='#7f8da5')
+            except Exception:pass
+
+    def _refresh_card_highlight(self):
+        for op,view in getattr(self,'card_views',{}).items():
+            selected = (op == self.active_card_op)
+            bg = '#f4f8ff' if selected else WHITE
+            border = ACCENT if selected else BORDER
+            view['card'].configure(bg=bg, highlightbackground=border, highlightcolor=ACCENT)
+            view['txt'].configure(bg=bg)
+            view['title'].configure(bg=bg, fg=ACCENT if selected else '#152033')
+            view['desc'].configure(bg=bg, fg='#4e5d75' if selected else SOFT)
+            view['arrow'].configure(bg=bg, fg=ACCENT if selected else '#7f8da5')
+
     def _render_cards(self):
         if not hasattr(self,'inner'):return
         for w in self.inner.winfo_children():w.destroy()
+        self.card_views={}
         q=self.search_var.get().strip().lower()
         items=[it for it in MODERN_TOOLS if (self.filter_name=='全部' or it[5]==self.filter_name) and (not q or q in (it[1]+' '+it[0]+' '+it[2]).lower())]
         for j,it in enumerate(items):
             op,title,desc,icon,color,group=it;r,c=divmod(j,3)
             self.inner.grid_columnconfigure(c,weight=1,uniform='cards')
-            card=tk.Frame(self.inner,bg=WHITE,highlightthickness=1,highlightbackground=BORDER,cursor='hand2')
-            card.grid(row=r,column=c,sticky='nsew',padx=8,pady=8)
-            left=tk.Frame(card,bg=color,width=48,height=48);left.pack(side='left',padx=(14,12),pady=16);left.pack_propagate(False)
-            tk.Label(left,text=icon,bg=color,fg='white',font=('Arial',19,'bold')).pack(expand=True)
+            card=tk.Frame(self.inner,bg=WHITE,highlightthickness=2,highlightbackground=BORDER,highlightcolor=ACCENT,cursor='hand2')
+            card.grid(row=r,column=c,sticky='nsew',padx=8,pady=8,ipady=2)
+            left=tk.Frame(card,bg=color,width=52,height=52);left.pack(side='left',padx=(14,12),pady=16);left.pack_propagate(False)
+            icon_label=tk.Label(left,text=icon,bg=color,fg='white',font=('Arial',20,'bold'))
+            icon_label.pack(expand=True)
             txt=tk.Frame(card,bg=WHITE);txt.pack(side='left',fill='both',expand=True,pady=13)
-            tk.Label(txt,text=title,bg=WHITE,fg='#152033',font=('Microsoft YaHei UI',11,'bold'),anchor='w').pack(fill='x')
-            tk.Label(txt,text=desc,bg=WHITE,fg=SOFT,font=('Microsoft YaHei UI',8),anchor='w',wraplength=190,justify='left').pack(fill='x',pady=(4,0))
-            tk.Label(card,text='›',bg=WHITE,fg='#7f8da5',font=('Arial',23)).pack(side='right',padx=12)
-            def choose(e=None,o=op):self._select_tool(o)
-            for w in [card,left,txt]+left.winfo_children()+txt.winfo_children():w.bind('<Button-1>',choose)
+            title_lbl=tk.Label(txt,text=title,bg=WHITE,fg='#152033',font=('Microsoft YaHei UI',12,'bold'),anchor='w')
+            title_lbl.pack(fill='x')
+            desc_lbl=tk.Label(txt,text=desc,bg=WHITE,fg=SOFT,font=('Microsoft YaHei UI',9),anchor='w',wraplength=220,justify='left')
+            desc_lbl.pack(fill='x',pady=(4,0))
+            arrow_lbl=tk.Label(card,text='›',bg=WHITE,fg='#7f8da5',font=('Arial',24))
+            arrow_lbl.pack(side='right',padx=12)
+            self.card_views[op]={'card':card,'txt':txt,'title':title_lbl,'desc':desc_lbl,'arrow':arrow_lbl,'left':left,'icon':icon_label}
+            def choose(e=None,o=op): self._select_tool(o)
+            def enter(e=None,o=op): self._preview_card(o,True)
+            def leave(e=None,o=op): self._preview_card(o,False)
+            binders=[card,left,txt,icon_label,title_lbl,desc_lbl,arrow_lbl]
+            for w in binders:
+                w.bind('<Button-1>',choose)
+                w.bind('<Enter>',enter)
+                w.bind('<Leave>',leave)
+        self._refresh_card_highlight()
         if not items:tk.Label(self.inner,text='未找到匹配的工具',bg=WHITE,fg=SOFT,font=('Microsoft YaHei UI',12)).pack(pady=45)
 
     def _workflow(self,parent):
         block=self._panel(parent);block.pack(fill='both',expand=True,padx=3,pady=(0,3))
         tk.Label(block,text='处理工作区',bg=WHITE,fg='#16213a',font=('Microsoft YaHei UI',12,'bold')).pack(anchor='w',padx=16,pady=(10,3))
         row=tk.Frame(block,bg=WHITE);row.pack(fill='both',expand=True,padx=12,pady=4)
-        self.files_list=tk.Listbox(row,height=4,selectmode='single',bg='#f9fbff',fg='#223044',font=('Microsoft YaHei UI',10),bd=0,highlightthickness=1,highlightbackground=BORDER,activestyle='none')
+        self.files_list=tk.Listbox(row,height=5,selectmode='single',bg='#f9fbff',fg='#223044',font=('Microsoft YaHei UI',11),bd=0,highlightthickness=1,highlightbackground=BORDER,activestyle='none')
         self.files_list.pack(side='left',fill='both',expand=True,padx=(4,12));self.files_list.bind('<<ListboxSelect>>',self._on_selection)
         actions=tk.Frame(row,bg=WHITE);actions.pack(side='left')
         for txt,callback in (('上移',lambda:self._reorder(-1)),('下移',lambda:self._reorder(1)),('删除',self._remove_selected),('清空',self.clear_files)):
@@ -665,9 +740,11 @@ class ModernApp(App):
 
     def _select_tool(self,operation):
         self.operation.set(operation)
+        self.active_card_op=operation
         title=next((x[1] for x in MODERN_TOOLS if x[0]==operation),operation)
         self.op_label.config(text=title)
-        self.status.set('已选择工具：'+title+' · 添加文件并设置参数后开始处理')
+        self.status.set('已选择工具：'+title+' · 卡片已高亮，可继续添加文件并开始处理')
+        self._refresh_card_highlight()
         self._hint()
     def _hint(self):
         op=self.operation.get()
@@ -696,7 +773,7 @@ class ModernApp(App):
         if hasattr(self,'status'):self.status.set(f'文件列表已更新：{len(self.files)} 个文件')
     def _footer(self):
         self.status=tk.StringVar(value='就绪  ·  本地处理文件，AI 分析时需自行选择可信 API')
-        tk.Label(self,textvariable=self.status,bg='#eaf2ff',fg=ACCENT,font=('Microsoft YaHei UI',9),anchor='w',padx=17,pady=8).pack(fill='x')
+        tk.Label(self,textvariable=self.status,bg='#eaf2ff',fg=ACCENT,font=('Microsoft YaHei UI',10,'bold'),anchor='w',padx=17,pady=9).pack(fill='x')
 
 if __name__=='__main__':
     ModernApp().mainloop()
