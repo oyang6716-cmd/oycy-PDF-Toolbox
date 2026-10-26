@@ -1,0 +1,12 @@
+oycy的PDF工具箱 v2.1 升级说明
+
+修复与增强：
+1. API Base URL 校验，支持 /v1 和完整 /chat/completions 地址；新增测试 API 连接功能。
+2. HTTP 405 会显示实际接口及排查说明。注意：Azure Blob XML MethodNotAllowed 常说明填写了对象存储地址，而不是聊天模型 API 接口。
+3. 首页主区域 / 右侧面板之间可鼠标拖动分隔线；工具区 / 文件工作区之间可上下拖动分隔线。
+4. 状态栏反馈文件列表变化、工具切换、操作进行和失败。
+5. 保留原有 PDF 处理引擎及密钥存储方式。
+
+在 GitHub 仓库替换 app.py；其余文件可以保留。如无自动构建，进入 Actions 手动运行工作流。
+
+注意：尚未在 Windows 中对该版本的 EXE 实际运行进行验证；部分供应商并不兼容 OpenAI Chat Completions 接口，需要供应商专用 API 适配。

@@ -218,6 +218,47 @@ TOOLS = [
  ('PDF 转 Excel','转换','xlsx'),('PDF 转 PPT','转换','pptx'),('PDF 转图片','转换','zip'),
  ('提取图片','转换','zip'),('图片转 PDF','转换','pdf'),('Word 转 PDF','转换','pdf')]
 
+def api_endpoint(base):
+    """Chat Completions compatible endpoint only. Never POST to file/blob URLs."""
+    from urllib.parse import urlsplit
+    base=base.strip().rstrip('/')
+    parsed=urlsplit(base)
+    if (parsed.scheme not in ('http','https') or not parsed.hostname or parsed.query or parsed.fragment):
+        raise ValueError('API 地址必须是服务商提供的 API Base URL，例如 https://api.openai.com/v1；不能填写网页、文件下载或含 ? 的签名链接。')
+    if parsed.scheme!='https' and parsed.hostname not in ('localhost','127.0.0.1','::1'):
+        raise ValueError('远程 API 必须使用 HTTPS；仅本机 localhost 可使用 HTTP。')
+    if base.endswith('/chat/completions'): return base
+    if base.endswith('/v1') or base.endswith('/v1/'): return base+'/chat/completions'
+    # some OpenAI-compatible providers use /compatible-mode/v1 or /api/v1
+    if '/v1' in parsed.path or '/compatible-mode/' in parsed.path:
+        return base+'/chat/completions'
+    raise ValueError('地址似乎不是兼容接口的 Base URL。一般应以 /v1 结尾；请到模型服务商的 API 文档获取地址。')
+
+def chat_request(base,model,key,messages,timeout=45):
+    url=api_endpoint(base)
+    if not model.strip():raise ValueError('模型 ID 不能为空。')
+    headers={'Content-Type':'application/json','Accept':'application/json','User-Agent':'oycy-PDF-Toolbox/2.0'}
+    if key:headers['Authorization']='Bearer '+key
+    payload={'model':model.strip(),'messages':messages}
+    req=urllib.request.Request(url,data=json.dumps(payload,ensure_ascii=False).encode('utf-8'),headers=headers,method='POST')
+    try:
+        with urllib.request.urlopen(req,timeout=timeout) as response:
+            result=json.loads(response.read().decode('utf-8'))
+    except urllib.error.HTTPError as e:
+        raw=e.read(900).decode('utf-8',errors='replace')
+        suffix=(' 405 表示接口不支持 POST；常见原因：API 地址指向网页、对象存储或非兼容接口。请核对服务商的 Chat Completions Base URL。' if e.code==405 else
+                ' 401/403 表示密钥无效或没有权限。' if e.code in (401,403) else
+                ' 404 表示路径或模型不正确。' if e.code==404 else
+                ' 429 表示请求额度或速率受限。' if e.code==429 else '')
+        raise RuntimeError(f'HTTP {e.code}，请求地址：{url}\n{raw}{suffix}')
+    except urllib.error.URLError as e:
+        raise RuntimeError(f'无法连接 API：{e.reason}\n地址：{url}\n请检查网络、代理或 API 地址。')
+    if not isinstance(result,dict) or not result.get('choices'):
+        raise RuntimeError('接口返回成功，但没有 choices 字段；该服务可能不是 Chat Completions 兼容接口。')
+    content=result['choices'][0].get('message',{}).get('content')
+    if isinstance(content,list):content='\n'.join(p.get('text','') for p in content if isinstance(p,dict))
+    return content or '接口返回了空内容。'
+
 class App(tk.Tk):
     def __init__(self):
         super().__init__();self.title(APP_NAME+' · WINDOWS EDITION')
@@ -326,12 +367,12 @@ class App(tk.Tk):
         tk.Label(self,textvariable=self.status,bg=BLUE,fg='white',font=('Microsoft YaHei UI',10),anchor='w',padx=18,pady=8).pack(fill='x')
     def _async(self,job,done):
         if self.busy:return
-        self.busy=True;self.status.set('正在处理，请勿关闭窗口…')
+        self.busy=True;self.status.set('● 正在执行，请勿关闭程序…');self.config(cursor='watch')
         def worker():
             try:ret=job(); self.after(0,lambda:finish(ret,None))
             except Exception as e:self.after(0,lambda err=str(e):finish(None,err))
         def finish(ret,err):
-            self.busy=False;self.status.set('处理失败' if err else '完成')
+            self.busy=False;self.config(cursor='');self.status.set('✕ 处理失败，查看错误信息' if err else '✓ 处理完成')
             if err:messagebox.showerror('处理失败',err)
             else:done(ret)
         threading.Thread(target=worker,daemon=True).start()
@@ -391,20 +432,9 @@ class App(tk.Tk):
             text=self.read_ai_text(self.ai_path)
             if not text.strip():raise ValueError('文档未提取到文字；扫描版 PDF 需要 OCR。')
             if len(text)>60000:text=text[:60000]+'\n[文件过长，已截取前 60000 字符]'
-            # OpenAI 兼容 chat/completions API；非所有厂商完全兼容。
-            payload={'model':self.model.get().strip(),'messages':[
-                {'role':'system','content':'你是严谨的中文文档分析助手。只根据给定文档作答，未知部分应说明。'},
-                {'role':'user','content':f'{prompt}\n\n---文档内容---\n{text}'}],'temperature':0.2}
-            url=base if base.endswith('/chat/completions') else base+'/chat/completions'
-            headers={'Content-Type':'application/json'}
-            if key:headers['Authorization']='Bearer '+key
-            req=urllib.request.Request(url,data=json.dumps(payload).encode('utf-8'),headers=headers,method='POST')
-            try:
-                with urllib.request.urlopen(req,timeout=120) as response:
-                    result=json.loads(response.read().decode('utf-8'))
-            except urllib.error.HTTPError as e:
-                raise RuntimeError(f'API 返回 HTTP {e.code}：{e.read(400).decode("utf-8",errors="replace")}')
-            return result['choices'][0]['message']['content']
+            messages=[{'role':'system','content':'你是严谨的中文文档分析助手。只根据给定文档作答，未知部分应说明。'},
+                      {'role':'user','content':f'{prompt}\n\n---文档内容---\n{text}'}]
+            return chat_request(base,self.model.get().strip(),key,messages,120)
         self._async(job,lambda ans:(self.ai_result.delete('1.0','end'),self.ai_result.insert('1.0',ans)))
     def save_ai_result(self):
         txt=self.ai_result.get('1.0','end').strip()
@@ -424,8 +454,22 @@ class App(tk.Tk):
         tk.Label(parent,text='示例：OpenAI 兼容接口 /v1 + 模型名称。密钥保存在 Windows 凭据管理器，不写入设置 JSON。\n支持本地 OpenAI 兼容服务（例如 localhost:11434/v1）；不同服务商的接口可能存在兼容性差异。',
                  bg=PAPER,fg='#555',justify='left',wraplength=800).grid(row=4,column=0,columnspan=2,sticky='w',padx=20,pady=11)
         self._btn(parent,'保存 API 设置',self.save_settings,RED).grid(row=5,column=1,sticky='w',padx=20,pady=10)
+        self._btn(parent,'测试 API 连接',self.test_api,BLUE).grid(row=5,column=0,sticky='w',padx=20,pady=10)
         self._btn(parent,'清除已保存的 API Key',self.delete_key,INK).grid(row=6,column=1,sticky='w',padx=20,pady=5)
         tk.Label(parent,text='隐私提示：基础 PDF 工具仅在本机处理。AI 分析会将提取出的文本上传到所配置的 API 端点；请确认服务提供商的数据政策。',bg=PAPER,fg=RED,wraplength=750,justify='left').grid(row=7,column=0,columnspan=2,sticky='w',padx=20,pady=20)
+    def test_api(self):
+        base=self.api_base.get().strip();model=self.model.get().strip();key=self._key()
+        try:endpoint=api_endpoint(base)
+        except Exception as e:messagebox.showerror('地址检查失败',str(e));return
+        if not key and 'localhost' not in base and '127.0.0.1' not in base:
+            messagebox.showwarning('缺少 API Key','请先填写 API Key（不必先保存），再测试连接。');return
+        self.status.set('正在连接：'+endpoint+' ...')
+        def job():return chat_request(base,model,key,[{'role':'user','content':'请只回复：连接成功'}],35)
+        def done(result):
+            self.status.set('API 测试成功')
+            messagebox.showinfo('API 连接成功',f'接口：{endpoint}\n模型：{model}\n返回：{result[:350]}')
+        self._async(job,done)
+
     def save_settings(self):
         base=self.api_base.get().strip()
         if not base.startswith('https://') and not base.startswith('http://localhost') and not base.startswith('http://127.0.0.1'):
@@ -512,19 +556,27 @@ class ModernApp(App):
 
     def _tools_ui(self,parent):
         parent.grid_columnconfigure(0,weight=1);parent.grid_rowconfigure(0,weight=1)
-        main=tk.Frame(parent,bg=BG);main.grid(row=0,column=0,sticky='nsew',padx=(2,12))
-        side=tk.Frame(parent,bg=BG,width=280);side.grid(row=0,column=1,sticky='ns',padx=(0,4));side.grid_propagate(False)
-        hero=tk.Frame(main,bg=BG);hero.pack(fill='x',pady=(10,6))
+        self.horizontal_pane=tk.PanedWindow(parent,orient='horizontal',bg=BORDER,bd=0,sashwidth=9,sashrelief='flat',opaqueresize=True)
+        self.horizontal_pane.grid(row=0,column=0,sticky='nsew',padx=3,pady=2)
+        main=tk.PanedWindow(self.horizontal_pane,orient='vertical',bg=BORDER,bd=0,sashwidth=9,opaqueresize=True)
+        side=tk.Frame(self.horizontal_pane,bg=BG,width=285)
+        self.horizontal_pane.add(main,minsize=560,stretch='always');self.horizontal_pane.add(side,minsize=235,stretch='never')
+        upper=tk.Frame(main,bg=BG);lower=tk.Frame(main,bg=BG)
+        main.add(upper,minsize=190,stretch='always');main.add(lower,minsize=145,stretch='never')
+        self.vertical_pane=main
+        self.after(250,lambda:self._init_sashes())
+
+        hero=tk.Frame(upper,bg=BG);hero.pack(fill='x',pady=(10,6))
         tk.Label(hero,text='所有处理 PDF 所需的工具都集中在一个地方',bg=BG,fg='#141b27',font=('Microsoft YaHei UI',21,'bold'),anchor='w').pack(fill='x',padx=6)
         tk.Label(hero,text='简单易用  ·  本地处理  ·  安全高效    选择工具后添加文件，设置参数并导出结果。',bg=BG,fg=SOFT,font=('Microsoft YaHei UI',10),anchor='w').pack(fill='x',padx=8,pady=(6,6))
-        bar=tk.Frame(main,bg=BG);bar.pack(fill='x',pady=(4,12))
+        bar=tk.Frame(upper,bg=BG);bar.pack(fill='x',pady=(4,12))
         self.search_var=tk.StringVar()
         search=ttk.Entry(bar,textvariable=self.search_var,width=26);search.pack(side='left',padx=(5,8),ipady=4)
         search.insert(0,'')
         self.search_var.trace_add('write',lambda *a:self._render_cards())
         for t in ('全部','转换','页面','安全'):
             self._button(bar,t,lambda v=t:self._set_filter(v)).pack(side='left',padx=3)
-        self.card_holder=self._panel(main);self.card_holder.pack(fill='both',expand=True,padx=3,pady=(0,8))
+        self.card_holder=self._panel(upper);self.card_holder.pack(fill='both',expand=True,padx=3,pady=(0,8))
         # scrollable tool cards
         self.tools_canvas=tk.Canvas(self.card_holder,bg=WHITE,highlightthickness=0)
         self.tools_scroll=ttk.Scrollbar(self.card_holder,orient='vertical',command=self.tools_canvas.yview)
@@ -557,8 +609,16 @@ class ModernApp(App):
         tk.Label(helpbox,text='✦ AI 文档助手',bg=WHITE,fg='#7752d9',font=('Microsoft YaHei UI',11,'bold'),anchor='w').pack(fill='x',padx=14,pady=(12,5))
         tk.Label(helpbox,text='文档总结、内容问答、自定义 API',bg=WHITE,fg=SOFT,font=('Microsoft YaHei UI',9)).pack(anchor='w',padx=14)
         self._button(helpbox,'打开 AI 助手 →',lambda:self.tabs.select(1)).pack(fill='x',padx=12,pady=(8,12))
-        self._workflow(main)
+        self._workflow(lower)
         self._hint()
+
+    def _init_sashes(self):
+        try:
+            w=self.horizontal_pane.winfo_width();h=self.vertical_pane.winfo_height()
+            if w>850:self.horizontal_pane.sash_place(0,max(560,w-290),0)
+            if h>500:self.vertical_pane.sash_place(0,0,max(260,int(h*.65)))
+            self.status.set('就绪 · 可拖动工作区之间的分隔线调整大小')
+        except tk.TclError:pass
 
     def _wheel(self,e):
         if self.tabs.index('current')==0 and self.tools_canvas.winfo_exists():
@@ -586,9 +646,9 @@ class ModernApp(App):
         if not items:tk.Label(self.inner,text='未找到匹配的工具',bg=WHITE,fg=SOFT,font=('Microsoft YaHei UI',12)).pack(pady=45)
 
     def _workflow(self,parent):
-        block=self._panel(parent);block.pack(fill='x',padx=3,pady=(0,3))
+        block=self._panel(parent);block.pack(fill='both',expand=True,padx=3,pady=(0,3))
         tk.Label(block,text='处理工作区',bg=WHITE,fg='#16213a',font=('Microsoft YaHei UI',12,'bold')).pack(anchor='w',padx=16,pady=(10,3))
-        row=tk.Frame(block,bg=WHITE);row.pack(fill='x',padx=12,pady=4)
+        row=tk.Frame(block,bg=WHITE);row.pack(fill='both',expand=True,padx=12,pady=4)
         self.files_list=tk.Listbox(row,height=4,selectmode='single',bg='#f9fbff',fg='#223044',font=('Microsoft YaHei UI',10),bd=0,highlightthickness=1,highlightbackground=BORDER,activestyle='none')
         self.files_list.pack(side='left',fill='both',expand=True,padx=(4,12));self.files_list.bind('<<ListboxSelect>>',self._on_selection)
         actions=tk.Frame(row,bg=WHITE);actions.pack(side='left')
@@ -607,6 +667,7 @@ class ModernApp(App):
         self.operation.set(operation)
         title=next((x[1] for x in MODERN_TOOLS if x[0]==operation),operation)
         self.op_label.config(text=title)
+        self.status.set('已选择工具：'+title+' · 添加文件并设置参数后开始处理')
         self._hint()
     def _hint(self):
         op=self.operation.get()
@@ -632,6 +693,7 @@ class ModernApp(App):
         self.files_list.delete(0,'end')
         for i,f in enumerate(self.files):self.files_list.insert('end',f'{i+1:02d}   {Path(f).name}')
         self.file_label.config(text=f'已添加 {len(self.files)} 个文件' if self.files else '尚未添加文件')
+        if hasattr(self,'status'):self.status.set(f'文件列表已更新：{len(self.files)} 个文件')
     def _footer(self):
         self.status=tk.StringVar(value='就绪  ·  本地处理文件，AI 分析时需自行选择可信 API')
         tk.Label(self,textvariable=self.status,bg='#eaf2ff',fg=ACCENT,font=('Microsoft YaHei UI',9),anchor='w',padx=17,pady=8).pack(fill='x')
