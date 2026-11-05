@@ -7,11 +7,13 @@ from tkinter import ttk, filedialog, messagebox
 import fitz
 from PIL import Image, ImageDraw, ImageFont
 import keyring
+from page_layout import PAGE_SIZES, edits_from_paths, compose_document, PageLayout
+from page_editor_ui import PageEditor, OutputPreview
 
 APP_NAME = 'oycy的PDF工具箱'
 SERVICE = 'oycy-pdf-ai'
 CONFIG = Path(os.getenv('APPDATA', str(Path.home()))) / 'oycy-PDF-Toolbox' / 'settings.json'
-DEFAULTS = dict(api_base='https://api.openai.com/v1', model='gpt-4.1-mini', quality='标准', output_dir='', remember=True)
+DEFAULTS = dict(api_base='https://api.openai.com/v1', model='gpt-4.1-mini', quality='标准', output_dir='', remember=True, merge_page_size='A4 纵向')
 BLUE, RED, YELLOW, INK, PAPER = '#214ccf', '#e5412d', '#f2c33e', '#141414', '#fffaf0'
 
 
@@ -94,22 +96,67 @@ def draw_text_overlay(doc, text, kind):
             page.insert_image(rect, stream=buf.getvalue(), overlay=True)
 
 
-def run_operation(operation, inputs, dest, quality, page_spec='', extra=''):
+MERGE_PAGE_MODES = tuple(PAGE_SIZES.keys())
+MERGE_PAGE_RECTS = {
+    'A4 纵向': (595.276, 841.890),
+    'A4 横向': (841.890, 595.276),
+    'A3 纵向': (841.890, 1190.551),
+    'A3 横向': (1190.551, 841.890),
+    'Letter 纵向': (612.0, 792.0),
+    'Letter 横向': (792.0, 612.0),
+}
+
+def merge_pdfs(inputs, dest, page_mode='原始尺寸', margin=18):
+    """Unify physical page size without rasterizing the content.
+
+    show_pdf_page embeds vector PDF content; appearance stays sharp. Interactive
+    annotations, links and form widgets are not transferred by this mechanism.
+    The original-size route uses insert_pdf and is retained for fidelity.
+    """
+    if page_mode not in MERGE_PAGE_MODES:
+        raise ValueError('不支持的页面尺寸模式：' + str(page_mode))
+    dest = Path(dest)
+    if not inputs:
+        raise ValueError('请至少添加一个 PDF 文件。')
+    try:
+        resolved = dest.resolve()
+        if any(Path(p).resolve() == resolved for p in inputs):
+            raise ValueError('输出文件不能覆盖输入文件，请选择新的文件名。')
+    except OSError:
+        pass
+    output=fitz.open()
+    try:
+        for path in inputs:
+            with fitz.open(path) as source:
+                if not source.is_pdf:
+                    raise ValueError(f'输入文件不是 PDF：{Path(path).name}')
+                if source.needs_pass:
+                    raise ValueError(f'文件已加密，请先解锁：{Path(path).name}')
+                if page_mode == '原始尺寸':
+                    output.insert_pdf(source, links=True, annots=True)
+                    continue
+                width,height = MERGE_PAGE_RECTS[page_mode]
+                inset = fitz.Rect(margin, margin, width-margin, height-margin)
+                for page_number in range(len(source)):
+                    new_page=output.new_page(width=width,height=height)
+                    # fit + keep_proportion=True prevents stretching and clipping.
+                    new_page.show_pdf_page(inset,source,page_number,keep_proportion=True,overlay=True)
+        if len(output)==0:
+            raise ValueError('没有可以合并的 PDF 页面。')
+        dest.parent.mkdir(parents=True,exist_ok=True)
+        output.save(str(dest),garbage=4,deflate=True)
+    finally:
+        output.close()
+    return str(dest)
+
+def run_operation(operation, inputs, dest, quality, page_spec='', extra='', merge_page_size='原始尺寸'):
     if not inputs: raise ValueError('请先选择文件。')
     q = {'轻量': (90, 0.85), '标准': (130, 0.88), '高清': (180, 0.93), '超清': (240, 0.97)}[quality]
     dpi, jpgquality = q
     dest = Path(dest); dest.parent.mkdir(parents=True, exist_ok=True)
     op = operation
     if op == '合并 PDF':
-        merged = fitz.open()
-        try:
-            for f in inputs:
-                with fitz.open(f) as d:
-                    if d.needs_pass: raise ValueError('包含加密 PDF，请先解锁。')
-                    merged.insert_pdf(d)
-            merged.save(str(dest), garbage=4, deflate=True)
-        finally: merged.close()
-        return str(dest)
+        return merge_pdfs(inputs, dest, merge_page_size)
     if op == '图片转 PDF':
         d = fitz.open()
         try:
@@ -292,6 +339,9 @@ class App(tk.Tk):
         self.geometry('1220x820');self.minsize(940,700);self.configure(bg=PAPER)
         self.cfg=load_cfg();self.files=[];self.busy=False
         self.operation=tk.StringVar(value='合并 PDF');self.quality=tk.StringVar(value=self.cfg['quality'])
+        self.merge_page_size=tk.StringVar(value=self.cfg.get('merge_page_size', 'A4 纵向'))
+        self.page_edits=None
+        self.custom_page_mm=(210,297)
         self.page_spec=tk.StringVar();self.extra=tk.StringVar();self.output=tk.StringVar(value=self.cfg['output_dir'])
         self.api_base=tk.StringVar(value=self.cfg['api_base']);self.model=tk.StringVar(value=self.cfg['model']);self.key=tk.StringVar(value='')
         self.prompt=tk.StringVar(value='请用中文概括这份文件的要点，并列出重要数据。')
@@ -377,9 +427,10 @@ class App(tk.Tk):
         files=filedialog.askopenfilenames(title='选择文件',filetypes=types+[('全部文件','*.*')])
         for f in files:
             if f not in self.files:self.files.append(f)
+        if files:self.page_edits=None
         self._refresh_files()
 
-    def clear_files(self):self.files=[];self._refresh_files()
+    def clear_files(self):self.files=[];self.page_edits=None;self._refresh_files()
     def _move(self,n):
         if len(self.files)>1:
             self.files = self.files[1:]+self.files[:1] if n<0 else self.files[-1:]+self.files[:-1]
@@ -412,7 +463,7 @@ class App(tk.Tk):
         path=filedialog.asksaveasfilename(title='选择输出文件保存位置',initialdir=init,initialfile=name,
                defaultextension='.'+ext,filetypes=[(ext.upper()+' 文件','*.'+ext),('全部文件','*.*')])
         if not path:return
-        self._async(lambda:run_operation(op,self.files,path,self.quality.get(),self.page_spec.get(),self.extra.get()),
+        self._async(lambda:run_operation(op,self.files,path,self.quality.get(),self.page_spec.get(),self.extra.get(),self.merge_page_size.get()),
                     lambda ret:messagebox.showinfo('处理成功',f'已保存到：\n{ret}'))
 
     def _ai_ui(self,parent):
@@ -627,12 +678,20 @@ class ModernApp(App):
         for val,desc in (('轻量','体积优先'),('标准','质量与体积平衡'),('高清','清晰度优先'),('超清','细节优先')):
             row=tk.Frame(options,bg=WHITE);row.pack(fill='x',padx=12,pady=1)
             tk.Radiobutton(row,text=f'{val}    · {desc}',variable=self.quality,value=val,bg=WHITE,fg='#344057',selectcolor=WHITE,activebackground=WHITE,font=('Microsoft YaHei UI',9)).pack(anchor='w')
-        tk.Label(options,text='部分无损操作不会改变画质',bg=WHITE,fg=SOFT,font=('Microsoft YaHei UI',8)).pack(anchor='w',padx=17,pady=(6,14))
+        tk.Label(options,text='部分无损操作不会改变画质',bg=WHITE,fg=SOFT,font=('Microsoft YaHei UI',8)).pack(anchor='w',padx=17,pady=(6,8))
+        self.merge_size_group=tk.Frame(options,bg=WHITE)
+        self.merge_size_group.pack(fill='x',padx=14,pady=(3,15))
+        tk.Label(self.merge_size_group,text='合并时统一页面尺寸',bg=WHITE,fg='#17243a',font=('Microsoft YaHei UI',10,'bold'),anchor='w').pack(fill='x',pady=(0,4))
+        ttk.Combobox(self.merge_size_group,textvariable=self.merge_page_size,values=MERGE_PAGE_MODES,state='readonly',font=('Microsoft YaHei UI',10)).pack(fill='x')
+        tk.Label(self.merge_size_group,text='等比例缩放、居中留白、不栅格化。',bg=WHITE,fg=SOFT,font=('Microsoft YaHei UI',8),anchor='w').pack(fill='x',pady=(3,0))
+        self.merge_page_size.trace_add('write',lambda *_: self._on_merge_size_change())
         settings=self._panel(side);settings.pack(fill='x',pady=(0,10))
         tk.Label(settings,text='当前工具 / 输出',bg=WHITE,fg='#17243a',font=('Microsoft YaHei UI',11,'bold'),anchor='w').pack(fill='x',padx=15,pady=(12,5))
         self.op_label=tk.Label(settings,text='合并PDF',bg=WHITE,fg=ACCENT,font=('Microsoft YaHei UI',12,'bold'),anchor='w');self.op_label.pack(fill='x',padx=15)
         self.file_label=tk.Label(settings,text='尚未添加文件',bg=WHITE,fg=SOFT,font=('Microsoft YaHei UI',9),anchor='w',justify='left',wraplength=230)
         self.file_label.pack(fill='x',padx=15,pady=7)
+        self._button(settings,'🗂 页面排版编辑 / 实时预览',self.open_page_editor).pack(fill='x',padx=12,pady=(6,4))
+        self._button(settings,'预览当前 PDF',self.preview_source).pack(fill='x',padx=12,pady=(0,5))
         self._button(settings,'开始处理 · 选择保存位置',self.run_tool,True).pack(fill='x',padx=12,pady=(6,12))
         helpbox=self._panel(side);helpbox.pack(fill='x')
         tk.Label(helpbox,text='✦ AI 文档助手',bg=WHITE,fg='#7752d9',font=('Microsoft YaHei UI',11,'bold'),anchor='w').pack(fill='x',padx=14,pady=(12,5))
@@ -738,6 +797,96 @@ class ModernApp(App):
         self.hint=tk.Label(block,text='',bg=WHITE,fg=SOFT,wraplength=850,justify='left',anchor='w',font=('Microsoft YaHei UI',9))
         self.hint.pack(fill='x',padx=16,pady=(0,12))
 
+    def open_page_editor(self):
+        if not self.files:
+            messagebox.showwarning('请先添加文件','请选择 PDF 文件再打开排版编辑器。',parent=self)
+            return
+        if any(Path(f).suffix.lower() != '.pdf' for f in self.files):
+            messagebox.showinfo('不支持此文件类型','页面排版编辑器只处理 PDF；图片转 PDF、Word 转 PDF 请使用对应工具。',parent=self)
+            return
+        try:
+            edits = self.page_edits if self.page_edits is not None else edits_from_paths(self.files)
+            PageEditor(self, edits, self.merge_page_size.get(), self.custom_page_mm, self._accept_page_edits)
+        except Exception as e:
+            messagebox.showerror('打开页面编辑器失败',str(e),parent=self)
+
+    def _accept_page_edits(self, edits, mode, custom_mm):
+        self.page_edits = [e.clone() for e in edits]
+        self.custom_page_mm = tuple(custom_mm)
+        self.merge_page_size.set(mode)
+        self.status.set(f'已应用 {len(edits)} 页局部排版 · {mode}，下一步点击开始处理导出')
+
+    def preview_source(self):
+        if not self.files:
+            messagebox.showwarning('请先添加文件','请先选择 PDF 文件。',parent=self)
+            return
+        if Path(self.files[0]).suffix.lower() != '.pdf':
+            messagebox.showinfo('提示','该预览目前支持 PDF 文件。',parent=self)
+            return
+        try:
+            if self.page_edits is not None:
+                import tempfile
+                temp = tempfile.TemporaryDirectory(prefix='oycy_layout_preview_')
+                path = Path(temp.name) / 'preview.pdf'
+                doc=compose_document(self.page_edits, path, self.merge_page_size.get(), self.custom_page_mm)
+                doc.close()
+                OutputPreview(self, path, cleanup=temp)
+            else:
+                OutputPreview(self, self.files[0])
+        except Exception as e:
+            messagebox.showerror('预览失败',str(e),parent=self)
+
+    def run_tool(self):
+        if not self.files:
+            messagebox.showwarning('缺少文件','请先添加待处理文件',parent=self)
+            return
+        op=self.operation.get()
+        ext=next(x[2] for x in TOOLS if x[0]==op)
+        name='oycy_'+re.sub(r'[^\w-]','_',op)+'.'+ext
+        init=self.output.get() or str(Path.home()/'Downloads')
+        path=filedialog.asksaveasfilename(title='选择输出文件保存位置',initialdir=init,initialfile=name,
+               defaultextension='.'+ext,filetypes=[(ext.upper()+' 文件','*.'+ext),('全部文件','*.*')])
+        if not path:return
+        if self.page_edits is not None and op == '合并 PDF':
+            edits=[e.clone() for e in self.page_edits]
+            def job():
+                result=compose_document(edits,path,self.merge_page_size.get(),self.custom_page_mm)
+                result.close()
+                return str(path)
+        else:
+            if self.page_edits is not None and op != '合并 PDF':
+                self.status.set('提示：当前局部排版编辑仅参与「合并PDF」导出；其他工具仍按原工具设置执行')
+            if self.merge_page_size.get()=='自定义尺寸' and op=='合并 PDF':
+                # Support custom page size even without manually editing every page.
+                edits=edits_from_paths(self.files)
+                def job():
+                    result=compose_document(edits,path,'自定义尺寸',self.custom_page_mm)
+                    result.close();return str(path)
+            else:
+                def job():
+                    return run_operation(op,self.files,path,self.quality.get(),self.page_spec.get(),
+                                         self.extra.get(),self.merge_page_size.get())
+        def completed(output):
+            self.status.set('✓ 已完成：'+str(output))
+            if Path(output).suffix.lower()=='.pdf':
+                answer=messagebox.askyesno('处理完成',f'文件已保存到：\n{output}\n\n是否打开处理后的效果预览？',parent=self)
+                if answer:
+                    try:OutputPreview(self,output)
+                    except Exception as e:messagebox.showerror('无法预览',str(e),parent=self)
+            else:
+                messagebox.showinfo('处理完成',f'文件已保存到：\n{output}\n非 PDF 结果可使用对应软件查看。',parent=self)
+        self._async(job,completed)
+
+    def _on_merge_size_change(self):
+        val=self.merge_page_size.get()
+        if val not in MERGE_PAGE_MODES:
+            return
+        self.cfg['merge_page_size']=val
+        try:save_cfg(self.cfg)
+        except OSError:pass
+        if hasattr(self,'status'):
+            self.status.set('合并页面尺寸已设为：'+val+' · 将保持内容长宽比')
+
     def _select_tool(self,operation):
         self.operation.set(operation)
         self.active_card_op=operation
@@ -745,11 +894,16 @@ class ModernApp(App):
         self.op_label.config(text=title)
         if hasattr(self,'status'):
             self.status.set('已选择工具：'+title+' · 卡片已高亮，可继续添加文件并开始处理')
+        if hasattr(self,'merge_size_group'):
+            if operation == '合并 PDF':
+                self.merge_size_group.pack(fill='x',padx=14,pady=(3,15))
+            else:
+                self.merge_size_group.pack_forget()
         self._refresh_card_highlight()
         self._hint()
     def _hint(self):
         op=self.operation.get()
-        tips={'PDF 转 Word':'基础版：文字提取为 Word，不保留复杂排版。','PDF 转 Excel':'基础版：按文本行导出，并非表格结构识别。','PDF 转 PPT':'每页以图片加入 PPT，页面内容不可逐项编辑。',
+        tips={'合并 PDF':'可在右侧选择 A4 等统一纸张规格；等比例居中，不改变图片像素，不裁切内容。统一模式不复制原 PDF 批注/链接/表单。','PDF 转 Word':'基础版：文字提取为 Word，不保留复杂排版。','PDF 转 Excel':'基础版：按文本行导出，并非表格结构识别。','PDF 转 PPT':'每页以图片加入 PPT，页面内容不可逐项编辑。',
             '压缩 PDF（图像）':'图像模式将栅格化页面，可能丢失文本可选性。','压缩 PDF（无损）':'无损优化不保证文件大小一定减小。','Word 转 PDF':'需要在电脑上另外安装 LibreOffice。',
             '重新排列页面':'在「页码 / 顺序」输入新的页序，例如 3,1,2。','PDF 拆分（逐页）':'留空拆分全部页面；输入 1,3,5-8 指定范围。',
             '添加文字水印':'请在「水印 / 密码 / 角度」填写中文或英文水印。','旋转 PDF':'可输入 90、180、270，默认 90。','PDF 加密':'在「水印 / 密码 / 角度」填写新密码。','解锁 PDF':'请输入现有密码。'}
@@ -761,11 +915,11 @@ class ModernApp(App):
         if idx is None:return
         dst=idx+delta
         if 0<=dst<len(self.files):
-            self.files[idx],self.files[dst]=self.files[dst],self.files[idx];self._refresh_files()
+            self.files[idx],self.files[dst]=self.files[dst],self.files[idx];self.page_edits=None;self._refresh_files()
             self.files_list.selection_set(dst);self.selected_idx=dst
     def _remove_selected(self):
         if self.selected_idx is not None and self.selected_idx<len(self.files):
-            del self.files[self.selected_idx];self.selected_idx=None;self._refresh_files()
+            del self.files[self.selected_idx];self.selected_idx=None;self.page_edits=None;self._refresh_files()
     def _refresh_files(self):
         if not hasattr(self,'files_list'):return
         self.files_list.delete(0,'end')
